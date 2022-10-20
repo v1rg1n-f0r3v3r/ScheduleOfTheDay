@@ -13,13 +13,13 @@
     </UserControl.Resources>
     <Grid>
         <ListView  ItemsSource="{Binding ScheduleCells}">
+            <i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <Button Content="{Binding Id}" Height="50" Width="50" Background="{Binding IsSelect,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ResourceKey=Converter}}">
-                            <i:Interaction.Behaviors>
-                                <custombehavior:CellScheduleBehavior></custombehavior:CellScheduleBehavior>
-                            </i:Interaction.Behaviors>
                         </Button>
                     </StackPanel>
                 </DataTemplate>
