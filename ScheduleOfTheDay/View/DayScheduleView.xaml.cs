@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ScheduleOfTheDay.Model;
 using ScheduleOfTheDay.ViewModel;
 
 namespace ScheduleOfTheDay.View
@@ -26,34 +28,85 @@ namespace ScheduleOfTheDay.View
         {
             InitializeComponent();
         }
-
+        string path;
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
+            DataGrid dataGrid = null;
             var viewmodel =(CellScheduleViewModel)DataContext;
             Button p = GetElementUnderMouse<Button>();
             if (p != null) 
-            {
+            { 
+                ObservableCollection<ScheduleCell> collection = null;
+                if (p.Tag.ToString() == "Monday")
+                {
+                    collection = viewmodel.ScheduleCellsM;
+                    path = Directory.GetCurrentDirectory() + "/SaveLogM.txt";
+                    dataGrid = CellsListVIewM;
+                }
+                else
+                if (p.Tag.ToString() == "Tuesday")
+                {
+                    path = Directory.GetCurrentDirectory() + "/SaveLogT.txt";
+                    collection = viewmodel.ScheduleCellsT;
+                    dataGrid = CellsListVIewT;
+                }
+                else
+                if (p.Tag.ToString() == "Wendsday")
+                {
+                    path = Directory.GetCurrentDirectory() + "/SaveLogW.txt";
+                    collection = viewmodel.ScheduleCellsW;
+                    dataGrid = CellsListVIewW;
+                }
+                else
+                if (p.Tag.ToString() == "Thursday")
+                {
+                    path = Directory.GetCurrentDirectory() + "/SaveLogTh.txt";
+                    collection = viewmodel.ScheduleCellsTh;
+                    dataGrid = CellsListVIewTh;
+                }
+                else
+                if (p.Tag.ToString() == "Friday")
+                {
+                    path = Directory.GetCurrentDirectory() + "/SaveLogF.txt";
+                    collection = viewmodel.ScheduleCellsF;
+                    dataGrid = CellsListVIewF;
+                }
+                else
+                if (p.Tag.ToString() == "Sanday")
+                {
+                    path = Directory.GetCurrentDirectory() + "/SaveLogSa.txt";
+                    collection = viewmodel.ScheduleCellsSa;
+                    dataGrid = CellsListVIewSa;
+                }
+                else
+                if (p.Tag.ToString() == "Saturday")
+                {
+                    dataGrid = CellsListVIewSu;
+                    path = Directory.GetCurrentDirectory() + "/SaveLogSu.txt";
+                    collection = viewmodel.ScheduleCellsSu;
+                }
                 if (e.LeftButton.ToString() == "Pressed")
                 {
-                    viewmodel.SetTrue(Convert.ToInt32(p.Content));
-                    CellsListVIew.ItemsSource = null;
-                    CellsListVIew.ItemsSource = viewmodel.ScheduleCells;
+                    viewmodel.SetTrue(Convert.ToInt32(p.Content), collection);
                 }
                 if (e.RightButton.ToString() == "Pressed")
                 {
-                    viewmodel.SetFalse(Convert.ToInt32(p.Content));
-                    CellsListVIew.ItemsSource = null;
-                    CellsListVIew.ItemsSource = viewmodel.ScheduleCells;
+                    viewmodel.SetFalse(Convert.ToInt32(p.Content), collection);
                 }
+                SaveStatus(collection);
+                Refresh(dataGrid, collection);
             }
-            SaveStatus();
         }
 
-        public void SaveStatus()
+        public void Refresh(DataGrid dataGrid, ObservableCollection<ScheduleCell> collection)
         {
-            var viewmodel = (CellScheduleViewModel)DataContext;
-            StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "/SaveLog.txt");
-            var collection = viewmodel.ScheduleCells;
+            dataGrid.ItemsSource = null;
+            dataGrid.ItemsSource = collection;
+        }
+
+        public void SaveStatus(ObservableCollection<ScheduleCell> collection)
+        {
+            StreamWriter sw = new StreamWriter(path);
             foreach (var cur in collection)
             {
                 sw.WriteLine(cur.IsSelect);

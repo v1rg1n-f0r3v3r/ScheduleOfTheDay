@@ -2,14 +2,31 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/expression/2015/interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:ScheduleOfTheDay.ViewModel"
              xmlns:custombehavior="clr-namespace:ScheduleOfTheDay.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" PreviewMouseMove="UserControl_PreviewMouseMove">
+             d:DesignHeight="400" d:DesignWidth="1700" PreviewMouseMove="UserControl_PreviewMouseMove">
     <UserControl.Resources>
-        <converter:BoolToColorConverter x:Key="Converter"></converter:BoolToColorConverter>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="GridLinesVisibility" Value="None"></Setter>
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}"
+           BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90"/>
+                            <ScaleTransform ScaleX="1" ScaleY="-1" />
+                        </TransformGroup>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -18,42 +35,240 @@
                 <DataTrigger Binding="{Binding IsSelect}" Value="True">
                     <Setter Value="Blue" Property="Background"></Setter>
                 </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
                 <DataTrigger Binding="{Binding Separate}" Value="True">
-                    <Setter Value="3,0,0,0" Property="Margin"></Setter>
+                    <Setter Value="0,10,0,0" Property="Margin"></Setter>
                 </DataTrigger>
             </Style.Triggers>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <ListView x:Name="CellsListVIew" ItemsSource="{Binding ScheduleCells}">
-            <ListView.ItemsPanel>
+        <Label Margin="210,80,0,0" Content="2:00"></Label>
+        <Label Margin="340,80,0,0" Content="4:00"></Label>
+        <Label Margin="470,80,0,0" Content="6:00"></Label>
+        <Label Margin="600,80,0,0" Content="8:00"></Label>
+        <Label Margin="730,80,0,0" Content="10:00"></Label>
+        <Label Margin="860,80,0,0" Content="12:00"></Label>
+        <Label Margin="990,80,0,0" Content="14:00"></Label>
+        <Label Margin="1120,80,0,0" Content="16:00"></Label>
+        <Label Margin="1250,80,0,0" Content="18:00"></Label>
+        <Label Margin="1380,80,0,0" Content="20:00"></Label>
+        <Label Margin="1510,80,0,0" Content="22:00"></Label>
+        <Label Margin="1640,80,0,0" Content="00:00"></Label>
+        <StackPanel Margin="20" VerticalAlignment="Center">
+            <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewM" ItemsSource="{Binding ScheduleCellsM}">
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="-90"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+            <!--<DataGrid.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"></StackPanel>
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+            </DataGrid.ItemsPanel>-->
             <!--<i:Interaction.Behaviors>
                 <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
             </i:Interaction.Behaviors>-->
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Foreground="Transparent" Content="{Binding Id}" Height="18" Width="18">
-                        </Button>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <ContentPresenter/>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Tag="Monday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.Header>
+                            <TextBlock Width="80" Text="Понедельник"></TextBlock>
+                    </DataGridTemplateColumn.Header>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewT" ItemsSource="{Binding ScheduleCellsT}">
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="-90"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+            <!--<DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>-->
+            <!--<i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>-->
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <Button Tag="Tuesday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Width="80" Text="Вторник"></TextBlock>
+                    </DataGridTemplateColumn.Header>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewW" ItemsSource="{Binding ScheduleCellsW}">
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="-90"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+            <!--<DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>-->
+            <!--<i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>-->
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <Button Tag="Wendsday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.Header>
+                            <TextBlock Width="80" Text="Среда"></TextBlock>
+                    </DataGridTemplateColumn.Header>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewTh" ItemsSource="{Binding ScheduleCellsTh}">
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="-90"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+            <!--<DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>-->
+            <!--<i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>-->
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <Button Tag="Thursday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.Header>
+                            <TextBlock Width="80" Text="Четверг"></TextBlock>
+                    </DataGridTemplateColumn.Header>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewF" ItemsSource="{Binding ScheduleCellsF}">
+            <DataGrid.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="-90"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                </TransformGroup>
+            </DataGrid.LayoutTransform>
+            <!--<DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>-->
+            <!--<i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>-->
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <Button Tag="Friday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.Header>
+                            <TextBlock Width="80" Text="Пятница"></TextBlock>
+                    </DataGridTemplateColumn.Header>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+         </DataGrid>
+            <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewSa" ItemsSource="{Binding ScheduleCellsSa}">
+                <DataGrid.LayoutTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="-90"/>
+                        <ScaleTransform ScaleX="1" ScaleY="-1" />
+                    </TransformGroup>
+                </DataGrid.LayoutTransform>
+                <!--<DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>-->
+                <!--<i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>-->
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Tag="Sanday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Width="80" Text="Суббота"></TextBlock>
+                        </DataGridTemplateColumn.Header>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid VerticalAlignment="Center" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" x:Name="CellsListVIewSu" ItemsSource="{Binding ScheduleCellsSu}">
+                <DataGrid.LayoutTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="-90"/>
+                        <ScaleTransform ScaleX="1" ScaleY="-1" />
+                    </TransformGroup>
+                </DataGrid.LayoutTransform>
+                <!--<DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>-->
+                <!--<i:Interaction.Behaviors>
+                <custombehavior:CellScheduleBehavior SetTrueCommand="{Binding setTrue}"></custombehavior:CellScheduleBehavior>
+            </i:Interaction.Behaviors>-->
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Tag="Saturday" Foreground="Transparent" Content="{Binding Id}" Height="15" Width="15">
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Width="80" Text="Воскресенье"></TextBlock>
+                        </DataGridTemplateColumn.Header>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </UserControl>
