@@ -10,5 +10,7 @@ namespace ScheduleOfTheDay.Model
     {
         public int Id { get; set; }
         public bool IsSelect { get; set; }
+        public DateTime Time { get; set; }
+        public bool Separate { get; set; }
     }
 }

@@ -13,9 +13,13 @@
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsSelect}" Value="True">
-                    <Setter Value="Blue" Property="Background"></Setter>                    
+                    <Setter Value="Blue" Property="Background"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Separate}" Value="True">
+                    <Setter Value="3,0,0,0" Property="Margin"></Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -33,7 +37,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Button Margin="2" Foreground="Transparent" Content="{Binding Id}" Height="50" Width="50">
+                        <Button Foreground="Transparent" Content="{Binding Id}" Height="18" Width="18">
                         </Button>
                     </StackPanel>
                 </DataTemplate>
@@ -44,7 +48,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <ContentPresenter />
+                                <ContentPresenter/>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>

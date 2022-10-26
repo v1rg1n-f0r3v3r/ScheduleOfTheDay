@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,19 @@ namespace ScheduleOfTheDay.View
                     CellsListVIew.ItemsSource = viewmodel.ScheduleCells;
                 }
             }
+            SaveStatus();
+        }
+
+        public void SaveStatus()
+        {
+            var viewmodel = (CellScheduleViewModel)DataContext;
+            StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "/SaveLog.txt");
+            var collection = viewmodel.ScheduleCells;
+            foreach (var cur in collection)
+            {
+                sw.WriteLine(cur.IsSelect);
+            }
+            sw.Close();
         }
 
         public static T FindVisualParent<T>(UIElement element) where T : UIElement
