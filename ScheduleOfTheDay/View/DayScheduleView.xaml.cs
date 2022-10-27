@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GUISDK;
 using ScheduleOfTheDay.Model;
 using ScheduleOfTheDay.ViewModel;
 
@@ -28,92 +29,30 @@ namespace ScheduleOfTheDay.View
         {
             InitializeComponent();
         }
-        string path;
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            DataGrid dataGrid = null;
-            var viewmodel =(CellScheduleViewModel)DataContext;
+            var viewmodel = (CellScheduleViewModel)DataContext;
             Button p = GetElementUnderMouse<Button>();
             if (p != null) 
             { 
-                ObservableCollection<ScheduleCell> collection = null;
-                if (p.Tag.ToString() == "Monday")
-                {
-                    collection = viewmodel.ScheduleCellsM;
-                    path = Directory.GetCurrentDirectory() + "/SaveLogM.txt";
-                    dataGrid = CellsListVIewM;
-                }
-                else
-                if (p.Tag.ToString() == "Tuesday")
-                {
-                    path = Directory.GetCurrentDirectory() + "/SaveLogT.txt";
-                    collection = viewmodel.ScheduleCellsT;
-                    dataGrid = CellsListVIewT;
-                }
-                else
-                if (p.Tag.ToString() == "Wendsday")
-                {
-                    path = Directory.GetCurrentDirectory() + "/SaveLogW.txt";
-                    collection = viewmodel.ScheduleCellsW;
-                    dataGrid = CellsListVIewW;
-                }
-                else
-                if (p.Tag.ToString() == "Thursday")
-                {
-                    path = Directory.GetCurrentDirectory() + "/SaveLogTh.txt";
-                    collection = viewmodel.ScheduleCellsTh;
-                    dataGrid = CellsListVIewTh;
-                }
-                else
-                if (p.Tag.ToString() == "Friday")
-                {
-                    path = Directory.GetCurrentDirectory() + "/SaveLogF.txt";
-                    collection = viewmodel.ScheduleCellsF;
-                    dataGrid = CellsListVIewF;
-                }
-                else
-                if (p.Tag.ToString() == "Sanday")
-                {
-                    path = Directory.GetCurrentDirectory() + "/SaveLogSa.txt";
-                    collection = viewmodel.ScheduleCellsSa;
-                    dataGrid = CellsListVIewSa;
-                }
-                else
-                if (p.Tag.ToString() == "Saturday")
-                {
-                    dataGrid = CellsListVIewSu;
-                    path = Directory.GetCurrentDirectory() + "/SaveLogSu.txt";
-                    collection = viewmodel.ScheduleCellsSu;
-                }
                 if (e.LeftButton.ToString() == "Pressed")
                 {
-                    viewmodel.SetTrue(Convert.ToInt32(p.Content), collection);
+                    if (p.Tag != null)
+                    {
+                        viewmodel.FindParentTrue(p.Tag.ToString(), Convert.ToInt32(p.Content));
+                    }
                 }
                 if (e.RightButton.ToString() == "Pressed")
                 {
-                    viewmodel.SetFalse(Convert.ToInt32(p.Content), collection);
+                    if (p.Tag != null)
+                    {
+                        viewmodel.FindParentFalse(p.Tag.ToString(), Convert.ToInt32(p.Content));
+                    }
                 }
-                SaveStatus(collection);
-                Refresh(dataGrid, collection);
+                ListBoxSchedudle.ItemsSource = null;
+                ListBoxSchedudle.ItemsSource = viewmodel.ScheduleCells;
             }
         }
-
-        public void Refresh(DataGrid dataGrid, ObservableCollection<ScheduleCell> collection)
-        {
-            dataGrid.ItemsSource = null;
-            dataGrid.ItemsSource = collection;
-        }
-
-        public void SaveStatus(ObservableCollection<ScheduleCell> collection)
-        {
-            StreamWriter sw = new StreamWriter(path);
-            foreach (var cur in collection)
-            {
-                sw.WriteLine(cur.IsSelect);
-            }
-            sw.Close();
-        }
-
         public static T FindVisualParent<T>(UIElement element) where T : UIElement
         {
             UIElement parent = element;
@@ -131,6 +70,18 @@ namespace ScheduleOfTheDay.View
         public static T GetElementUnderMouse<T>() where T : UIElement
         {
             return FindVisualParent<T>(Mouse.DirectlyOver as UIElement);
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var viewmodel = (CellScheduleViewModel)DataContext;
+            viewmodel.FindAndSave("Понедельник", Directory.GetCurrentDirectory() + "/SaveLogM.txt");
+            viewmodel.FindAndSave("Вторник", Directory.GetCurrentDirectory() + "/SaveLogT.txt");
+            viewmodel.FindAndSave("Среда", Directory.GetCurrentDirectory() + "/SaveLogW.txt");
+            viewmodel.FindAndSave("Четверг", Directory.GetCurrentDirectory() + "/SaveLogTh.txt");
+            viewmodel.FindAndSave("Пятница", Directory.GetCurrentDirectory() + "/SaveLogF.txt");
+            viewmodel.FindAndSave("Суббота", Directory.GetCurrentDirectory() + "/SaveLogSa.txt");
+            viewmodel.FindAndSave("Воскресенье", Directory.GetCurrentDirectory() + "/SaveLogSu.txt");
         }
     }
 }

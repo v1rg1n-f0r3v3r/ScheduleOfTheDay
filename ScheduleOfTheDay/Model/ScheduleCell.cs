@@ -12,5 +12,6 @@ namespace ScheduleOfTheDay.Model
         public bool IsSelect { get; set; }
         public DateTime Time { get; set; }
         public bool Separate { get; set; }
+        public string NameOfWeek { get; set; }
     }
 }

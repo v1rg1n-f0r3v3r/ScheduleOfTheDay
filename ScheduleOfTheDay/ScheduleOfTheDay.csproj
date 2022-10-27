@@ -68,8 +68,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\CollectionOfDays.cs" />
+    <Compile Include="Model\CollectionsOfDayCollection.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="ViewModel\BoolToColorConverter.cs" />
     <Compile Include="ViewModel\CellScheduleBehavior.cs" />
     <Compile Include="ViewModel\CellScheduleViewModel.cs" />
     <Compile Include="ViewModel\PropertyChange.cs" />

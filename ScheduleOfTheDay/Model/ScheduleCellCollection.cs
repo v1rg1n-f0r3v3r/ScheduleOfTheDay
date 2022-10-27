@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 
@@ -21,18 +22,19 @@ namespace ScheduleOfTheDay.Model
         string PathSa = Directory.GetCurrentDirectory() + "/SaveLogSa.txt";
         string PathSu = Directory.GetCurrentDirectory() + "/SaveLogSu.txt";
 
-        public List<ScheduleCell> LoadCollectionMonday()
+        public ObservableCollection<ScheduleCell> LoadCollectionMonday()
         {
             if (File.Exists(PathM))
             {
                 StreamReader sr = new StreamReader(PathM);
                 DateTime time = new DateTime(2003,12,12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
                     time.AddMinutes(15);
+                    scheduleCell.NameOfWeek = "Понедельник";
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
                     {
@@ -54,7 +56,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
@@ -68,17 +70,18 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        public List<ScheduleCell> LoadCollectionTuesday()
+        public ObservableCollection<ScheduleCell> LoadCollectionTuesday()
         {
             if (File.Exists(PathT))
             {
                 StreamReader sr = new StreamReader(PathT);
                 DateTime time = new DateTime(2003, 12, 12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
+                    scheduleCell.NameOfWeek = "Вторник";
                     time.AddMinutes(15);
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
@@ -101,7 +104,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
@@ -115,17 +118,18 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        public List<ScheduleCell> LoadCollectionWednsday()
+        public ObservableCollection<ScheduleCell> LoadCollectionWednsday()
         {
             if (File.Exists(PathW))
             {
                 StreamReader sr = new StreamReader(PathW);
                 DateTime time = new DateTime(2003, 12, 12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
+                    scheduleCell.NameOfWeek = "Среда";
                     time.AddMinutes(15);
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
@@ -148,7 +152,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
@@ -162,17 +166,18 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        public List<ScheduleCell> LoadCollectionThurday()
+        public ObservableCollection<ScheduleCell> LoadCollectionThurday()
         {
             if (File.Exists(PathTh))
             {
                 StreamReader sr = new StreamReader(PathTh);
                 DateTime time = new DateTime(2003, 12, 12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
+                    scheduleCell.NameOfWeek = "Четверг";
                     time.AddMinutes(15);
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
@@ -195,7 +200,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
@@ -209,17 +214,18 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        public List<ScheduleCell> LoadCollectionFriday()
+        public ObservableCollection<ScheduleCell> LoadCollectionFriday()
         {
             if (File.Exists(PathF))
             {
                 StreamReader sr = new StreamReader(PathF);
                 DateTime time = new DateTime(2003, 12, 12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
+                    scheduleCell.NameOfWeek = "Пятница";
                     time.AddMinutes(15);
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
@@ -242,7 +248,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
@@ -256,17 +262,18 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        public List<ScheduleCell> LoadCollectionSaturday()
+        public ObservableCollection<ScheduleCell> LoadCollectionSaturday()
         {
             if (File.Exists(PathSa))
             {
                 StreamReader sr = new StreamReader(PathSa);
                 DateTime time = new DateTime(2003, 12, 12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
+                    scheduleCell.NameOfWeek = "Суббота";
                     time.AddMinutes(15);
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
@@ -289,7 +296,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
@@ -303,17 +310,18 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        public List<ScheduleCell> LoadCollectionSunday()
+        public ObservableCollection<ScheduleCell> LoadCollectionSunday()
         {
             if (File.Exists(PathSu))
             {
                 StreamReader sr = new StreamReader(PathSu);
                 DateTime time = new DateTime(2003, 12, 12);
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
                     scheduleCell.Id = i;
+                    scheduleCell.NameOfWeek = "Воскресенье";
                     time.AddMinutes(15);
                     scheduleCell.Time = time;
                     if ((i % 8) == 0 && i != 0)
@@ -336,7 +344,7 @@ namespace ScheduleOfTheDay.Model
             else
             {
                 DateTime time = new DateTime();
-                List<ScheduleCell> scheduleCells = new List<ScheduleCell>();
+                ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
                 for (int i = 0; i < count; i++)
                 {
                     ScheduleCell scheduleCell = new ScheduleCell();
