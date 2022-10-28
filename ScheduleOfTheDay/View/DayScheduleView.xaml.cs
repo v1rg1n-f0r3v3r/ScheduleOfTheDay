@@ -39,14 +39,14 @@ namespace ScheduleOfTheDay.View
                 {
                     if (p.Tag != null)
                     {
-                        viewmodel.FindParentTrue(p.Tag.ToString(), Convert.ToInt32(p.Content));
+                        viewmodel.FindParentTrue((CollectionOfDays.DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
                     }
                 }
                 if (e.RightButton.ToString() == "Pressed")
                 {
                     if (p.Tag != null)
                     {
-                        viewmodel.FindParentFalse(p.Tag.ToString(), Convert.ToInt32(p.Content));
+                        viewmodel.FindParentFalse((CollectionOfDays.DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
                     }
                 }
                 ListBoxSchedudle.ItemsSource = null;
@@ -75,13 +75,8 @@ namespace ScheduleOfTheDay.View
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var viewmodel = (CellScheduleViewModel)DataContext;
-            viewmodel.FindAndSave("Понедельник", Directory.GetCurrentDirectory() + "/SaveLogM.txt");
-            viewmodel.FindAndSave("Вторник", Directory.GetCurrentDirectory() + "/SaveLogT.txt");
-            viewmodel.FindAndSave("Среда", Directory.GetCurrentDirectory() + "/SaveLogW.txt");
-            viewmodel.FindAndSave("Четверг", Directory.GetCurrentDirectory() + "/SaveLogTh.txt");
-            viewmodel.FindAndSave("Пятница", Directory.GetCurrentDirectory() + "/SaveLogF.txt");
-            viewmodel.FindAndSave("Суббота", Directory.GetCurrentDirectory() + "/SaveLogSa.txt");
-            viewmodel.FindAndSave("Воскресенье", Directory.GetCurrentDirectory() + "/SaveLogSu.txt");
+            viewmodel.Save();
+            MessageBox.Show("Data Saved");
         }
     }
 }

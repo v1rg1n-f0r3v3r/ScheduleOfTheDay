@@ -1,5 +1,6 @@
 ﻿using ScheduleOfTheDay.Model;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace ScheduleOfTheDay.ViewModel
             set { _scheduleCells = value; }
         }
 
-        public void FindParentTrue(string Name, int i)
+        public void FindParentTrue(CollectionOfDays.DayOfWeek Name, int i)
         {
             var collection = ScheduleCells.FirstOrDefault(x => x.Name == Name);
             if (collection != null)
@@ -33,21 +34,27 @@ namespace ScheduleOfTheDay.ViewModel
             }
         }
 
-        public void FindAndSave(string Name, string path)
+        public void Save()
         {
+            string path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
             StreamWriter sw = new StreamWriter(path);
-            var collection = ScheduleCells.FirstOrDefault(x => x.Name == Name);
-            if (collection != null)
+            for (int i = 0; i < ScheduleCells.Count; i++)
             {
-                foreach (var cur in collection.ScheduleCellsOfDay)
+                var collection = ScheduleCells.FirstOrDefault(x => x.Id == i);
+                if (collection != null)
                 {
-                    sw.WriteLine(cur.IsSelect);
+                    int count = 0;
+                    foreach (var cur in collection.ScheduleCellsOfDay)
+                    {
+                        sw.WriteLine(cur.NameOfWeek.ToString() + " " + cur.IsSelect);
+                        count++;
+                    }
                 }
-                sw.Close();
             }
+            sw.Close();
         }
 
-        public void FindParentFalse(string Name, int i)
+        public void FindParentFalse(CollectionOfDays.DayOfWeek Name, int i)
         {
             var collection = ScheduleCells.FirstOrDefault(x => x.Name == Name);
             if (collection != null) 

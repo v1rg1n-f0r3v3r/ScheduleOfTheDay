@@ -9,6 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="1700" PreviewMouseMove="UserControl_PreviewMouseMove">
     <UserControl.Resources>
+        <converter:EnumDescripConverter x:Key="DescripConverter" ></converter:EnumDescripConverter>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -19,6 +20,9 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Separate}" Value="True">
                     <Setter Value="10,0,0,0" Property="Margin"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Separate}" Value="False">
+                    <Setter Value="-9,0,0,0" Property="Margin"></Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -32,24 +36,24 @@
         <Label Margin="860,80,0,0" Content="12:00"></Label>
         <Label Margin="990,80,0,0" Content="14:00"></Label>
         <Label Margin="1120,80,0,0" Content="16:00"></Label>
-        <Label Margin="1250,80,0,0" Content="18:00"></Label>
-        <Label Margin="1380,80,0,0" Content="20:00"></Label>
-        <Label Margin="1510,80,0,0" Content="22:00"></Label>
+        <Label Margin="1252,80,0,0" Content="18:00"></Label>
+        <Label Margin="1383,80,0,0" Content="20:00"></Label>
+        <Label Margin="1514,80,0,0" Content="22:00"></Label>
         <Label Margin="1640,80,0,0" Content="00:00"></Label>
-        <ListBox x:Name="ListBoxSchedudle" Margin="10" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
+        <ListBox x:Name="ListBoxSchedudle" Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0 0 0 5" Width="90" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Margin="0 0 0 3" Width="90" Text="{Binding Name, Converter={StaticResource DescripConverter}}"></TextBlock>
                         <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCellsOfDay}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"></VirtualizingStackPanel>
+                                    <VirtualizingStackPanel Margin="0" IsItemsHost="True" Orientation="Horizontal"></VirtualizingStackPanel>
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
+                                    <StackPanel Margin="0">
                                         <Button Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding Id}" Width="13" Height="13"></Button>
                                     </StackPanel>
                                 </DataTemplate>
