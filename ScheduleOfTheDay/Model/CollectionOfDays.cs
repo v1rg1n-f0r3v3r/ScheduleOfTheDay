@@ -1,12 +1,6 @@
 ﻿using ScheduleOfTheDay.ViewModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ScheduleOfTheDay.Model
 {
     public enum DayOfWeek
@@ -27,9 +21,19 @@ namespace ScheduleOfTheDay.Model
         Sunday
     }
 
-    public class CollectionOfDays
+    public class CollectionOfDays : PropertyChange
     {
-        public DayOfWeek DayOfWeek { get; set; }
-        public ObservableCollection<ScheduleCell> ScheduleCellsOfDay { get; set; }
+        private DayOfWeek dayOfWeek;
+        public DayOfWeek DayOfWeek 
+        {
+            get { return dayOfWeek; }
+            set { dayOfWeek = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<ScheduleCell> scheduleCellsOfDay;
+        public ObservableCollection<ScheduleCell> ScheduleCellsOfDay 
+        { 
+            get { return scheduleCellsOfDay; } 
+            set { scheduleCellsOfDay = value; OnPropertyChanged();}
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace ScheduleOfTheDay.ViewModel
         public ObservableCollection<CollectionOfDays> ScheduleCells
         {
             get {return _scheduleCells;}
-            set { _scheduleCells = value;}
+            set { _scheduleCells = value; OnPropertyChanged();}
         }
 
         public void FindParentTrue(DayOfWeek Name, int i)
