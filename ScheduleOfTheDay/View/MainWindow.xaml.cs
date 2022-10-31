@@ -1,18 +1,14 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using ScheduleOfTheDay.ViewModel;
 
 namespace ScheduleOfTheDay
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            SheduleView.DataContext = new CellScheduleViewModel();
+            SheduleView.DataContext = new DayScheduleViewModel();
         }
     }
 }

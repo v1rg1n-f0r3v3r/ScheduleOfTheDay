@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ScheduleOfTheDay.ViewModel;
+using System;
 
 namespace ScheduleOfTheDay.Model
 {
@@ -11,7 +8,6 @@ namespace ScheduleOfTheDay.Model
         public int Id { get; set; }
         public bool IsSelect { get; set; }
         public DateTime Time { get; set; }
-        public bool Separate { get; set; }
-        public CollectionOfDays.DayOfWeek NameOfWeek { get; set; }
+        public DayOfWeek NameOfWeek { get; set; }
     }
 }

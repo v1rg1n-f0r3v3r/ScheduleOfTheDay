@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using GUISDK;
-using ScheduleOfTheDay.Model;
 using ScheduleOfTheDay.ViewModel;
+using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.View
 {
@@ -31,7 +19,7 @@ namespace ScheduleOfTheDay.View
         }
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            var viewmodel = (CellScheduleViewModel)DataContext;
+            var viewmodel = (DayScheduleViewModel)DataContext;
             Button p = GetElementUnderMouse<Button>();
             if (p != null) 
             { 
@@ -39,18 +27,16 @@ namespace ScheduleOfTheDay.View
                 {
                     if (p.Tag != null)
                     {
-                        viewmodel.FindParentTrue((CollectionOfDays.DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
+                        viewmodel.FindParentTrue((DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
                     }
                 }
                 if (e.RightButton.ToString() == "Pressed")
                 {
-                    if (p.Tag != null)
+                    if (p.Tag != null) 
                     {
-                        viewmodel.FindParentFalse((CollectionOfDays.DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
+                        viewmodel.FindParentFalse((DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
                     }
                 }
-                ListBoxSchedudle.ItemsSource = null;
-                ListBoxSchedudle.ItemsSource = viewmodel.ScheduleCells;
             }
         }
         public static T FindVisualParent<T>(UIElement element) where T : UIElement
@@ -74,7 +60,7 @@ namespace ScheduleOfTheDay.View
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewmodel = (CellScheduleViewModel)DataContext;
+            var viewmodel = (DayScheduleViewModel)DataContext;
             viewmodel.Save();
             MessageBox.Show("Data Saved");
         }
