@@ -15,7 +15,7 @@
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0"/>
-            <Setter Value="-9,0,0,0" Property="Margin"></Setter>
+            <Setter Value="2,0,0,0" Property="Margin"></Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsSelect}" Value="True">
                     <Setter Value="Blue" Property="Background"></Setter>
@@ -39,29 +39,29 @@
         <Label Margin="1383,80,0,0" Content="20:00"></Label>
         <Label Margin="1514,80,0,0" Content="22:00"></Label>
         <Label Margin="1645,80,0,0" Content="00:00"></Label>
-        <ListBox x:Name="ListBoxSchedudle" Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
-            <ListBox.ItemTemplate>
+        <ItemsControl x:Name="ListBoxSchedudle" Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0 10 3" Width="80" Text="{Binding DayOfWeek, Converter={StaticResource DescripConverter}}"></TextBlock>
-                        <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCellsOfDay}">
-                            <ListBox.ItemsPanel>
+                        <ItemsControl BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCellsOfDay}">
+                            <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel Margin="0" IsItemsHost="True" Orientation="Horizontal"></VirtualizingStackPanel>
                                 </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Margin="0">
-                                        <Button Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding Id}" Width="13" Height="13"></Button>
+                                    <StackPanel>
+                                        <Button Template="{StaticResource NoMouseOverButtonTemplate}" Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding Id}" Width="13.3" Height="13.3" IsDefault="True"></Button>
                                     </StackPanel>
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </DataTemplate>                
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Button x:Name="SaveButton" Height="50" Width="150" Content="Save" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SaveButton_Click"></Button>
     </Grid>
 </UserControl>
