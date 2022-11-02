@@ -5,29 +5,45 @@ namespace ScheduleOfTheDay.Model
 {
     public class ScheduleCell: PropertyChange
     {
-        private int id;
+        private int _id;
         public int Id
         {
-            get { return id; }
-            set { id = value; OnPropertyChanged(); }
+            get { return _id; }
+            set 
+            { 
+                _id = value; 
+                OnPropertyChanged(); 
+            }
         }
-        bool isSelect;
+        bool _isSelect;
         public bool IsSelect
         {
-            get { return isSelect; }
-            set { isSelect = value; OnPropertyChanged(); }
+            get { return _isSelect; }
+            set 
+            { 
+                _isSelect = value; 
+                OnPropertyChanged();
+            }
         }
-        DateTime time;
+        DateTime _time;
         public DateTime Time 
         {
-            get { return time; }
-            set { time = value; OnPropertyChanged(); }
+            get { return _time; }
+            set 
+            {
+                _time = value; 
+                OnPropertyChanged(); 
+            }
         }
-        DayOfWeek nameOfWeek;
+        DayOfWeek _nameOfWeek;
         public DayOfWeek NameOfWeek 
         {
-            get { return nameOfWeek; }
-            set { nameOfWeek = value; OnPropertyChanged(); }
+            get { return _nameOfWeek; }
+            set 
+            {
+                _nameOfWeek = value; 
+                OnPropertyChanged(); 
+            }
         }
     }
 }

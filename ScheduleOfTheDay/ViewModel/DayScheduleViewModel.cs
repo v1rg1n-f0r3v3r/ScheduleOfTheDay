@@ -1,7 +1,9 @@
 ﻿using ScheduleOfTheDay.Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Media.Animation;
 
 namespace ScheduleOfTheDay.ViewModel
 {
@@ -12,13 +14,26 @@ namespace ScheduleOfTheDay.ViewModel
             DaysCollection cellCollectionM = new DaysCollection();
             var list = cellCollectionM.LoadCollectionOfDays();
             _scheduleCells = new ObservableCollection<CollectionOfDays>(list);
+            var time = GetTimeList();
+            Time = time;
         }
-
+        private string[] GetTimeList()
+        {
+            string[] list = { "02:00", "04:00", "06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00", "00:00" };
+            return list;
+        }
         private ObservableCollection<CollectionOfDays> _scheduleCells;
         public ObservableCollection<CollectionOfDays> ScheduleCells
         {
             get {return _scheduleCells;}
-            set { _scheduleCells = value; OnPropertyChanged();}
+            set { _scheduleCells = value; }
+        }
+
+        private string[] _time;
+        public string[] Time
+        {
+            get { return _time; }
+            set { _time = value; }
         }
 
         public void FindParentTrue(DayOfWeek Name, int i)

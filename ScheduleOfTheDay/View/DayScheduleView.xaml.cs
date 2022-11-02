@@ -8,9 +8,6 @@ using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.View
 {
-    /// <summary>
-    /// Логика взаимодействия для DayScheduleView.xaml
-    /// </summary>
     public partial class DayScheduleView : UserControl
     {
         public DayScheduleView()
@@ -20,7 +17,7 @@ namespace ScheduleOfTheDay.View
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             var viewmodel = (DayScheduleViewModel)DataContext;
-            Button p = GetElementUnderMouse<Button>();
+            Label p = GetElementUnderMouse<Label>();
             if (p != null) 
             { 
                 if (e.LeftButton.ToString() == "Pressed")

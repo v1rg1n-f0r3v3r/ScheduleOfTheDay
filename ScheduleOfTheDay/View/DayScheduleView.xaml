@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <converter:EnumDescripConverter x:Key="DescripConverter" ></converter:EnumDescripConverter>
         <converter:IdBooleanConverter x:Key="IdToBoolean" ></converter:IdBooleanConverter>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Label}">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0"/>
@@ -27,19 +27,21 @@
         </Style>
     </UserControl.Resources>
     <Grid Background="White">
-        <Label Margin="210,80,0,0" Content="2:00"></Label>
-        <Label Margin="340,80,0,0" Content="4:00"></Label>
-        <Label Margin="470,80,0,0" Content="6:00"></Label>
-        <Label Margin="600,80,0,0" Content="8:00"></Label>
-        <Label Margin="730,80,0,0" Content="10:00"></Label>
-        <Label Margin="860,80,0,0" Content="12:00"></Label>
-        <Label Margin="990,80,0,0" Content="14:00"></Label>
-        <Label Margin="1120,80,0,0" Content="16:00"></Label>
-        <Label Margin="1252,80,0,0" Content="18:00"></Label>
-        <Label Margin="1383,80,0,0" Content="20:00"></Label>
-        <Label Margin="1514,80,0,0" Content="22:00"></Label>
-        <Label Margin="1645,80,0,0" Content="00:00"></Label>
-        <ItemsControl x:Name="ListBoxSchedudle" Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
+        <ItemsControl ItemsSource="{Binding Time}" Margin="109,100,0,20">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Margin="0" IsItemsHost="True" Orientation="Horizontal"></VirtualizingStackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding}" Margin="100,0,0,0"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl  Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -53,7 +55,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Button Template="{StaticResource NoMouseOverButtonTemplate}" Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding Id}" Width="13.3" Height="13.3" IsDefault="True"></Button>
+                                        <Label Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding Id}" Width="13" Height="13"></Label>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
