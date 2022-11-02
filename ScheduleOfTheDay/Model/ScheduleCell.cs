@@ -5,13 +5,13 @@ namespace ScheduleOfTheDay.Model
 {
     public class ScheduleCell: PropertyChange
     {
-        private int _id;
-        public int Id
+        private int _sequenceNumber;
+        public int SequenceNumber
         {
-            get { return _id; }
+            get { return _sequenceNumber; }
             set 
-            { 
-                _id = value; 
+            {
+                _sequenceNumber = value; 
                 OnPropertyChanged(); 
             }
         }

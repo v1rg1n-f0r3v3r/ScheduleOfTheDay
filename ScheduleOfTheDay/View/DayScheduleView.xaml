@@ -19,13 +19,14 @@
                 <DataTrigger Binding="{Binding IsSelect}" Value="True">
                     <Setter Value="Blue" Property="Background"></Setter>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Id, Converter={StaticResource IdToBoolean}}" Value="True">
+                <DataTrigger Binding="{Binding SequenceNumber, Converter={StaticResource IdToBoolean}}" Value="True">
                     <Setter Value="10,0,0,0" Property="Margin"></Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid Background="White">
+        
         <ItemsControl ItemsSource="{Binding Time}" Margin="109,100,0,20">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -40,6 +41,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        
         <ItemsControl  Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding ScheduleCells}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -54,7 +56,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Label Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding Id}" Width="13" Height="13"></Label>
+                                        <Label Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding SequenceNumber}" Width="13" Height="13"></Label>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -63,6 +65,7 @@
                 </DataTemplate>                
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        
         <Button x:Name="SaveButton" Height="50" Width="150" Content="Save" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SaveButton_Click"></Button>
     </Grid>
 </UserControl>

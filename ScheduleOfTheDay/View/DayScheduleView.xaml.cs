@@ -58,8 +58,8 @@ namespace ScheduleOfTheDay.View
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var viewmodel = (DayScheduleViewModel)DataContext;
-            viewmodel.Save();
-            MessageBox.Show("Data Saved");
+            viewmodel.SaveCommand.Execute(null);
+            MessageBox.Show("DataSaved");
         }
     }
 }

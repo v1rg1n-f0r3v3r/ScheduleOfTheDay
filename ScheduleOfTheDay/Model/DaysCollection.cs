@@ -51,7 +51,7 @@ namespace ScheduleOfTheDay.Model
                 time.AddMinutes(15);
                 scheduleCell.NameOfWeek = dayOfWeek;
                 scheduleCell.Time = time;
-                scheduleCell.Id = i;
+                scheduleCell.SequenceNumber = i;
                 string status = sr.ReadLine();
                 string[] statusWords = status.Split(' ');
                 if (statusWords[0] == dayOfWeek.ToString())
@@ -78,7 +78,7 @@ namespace ScheduleOfTheDay.Model
             for (int i = 0; i < count; i++)
             {
                 ScheduleCell scheduleCell = new ScheduleCell();
-                scheduleCell.Id = i;
+                scheduleCell.SequenceNumber = i;
                 scheduleCell.IsSelect = false;
                 scheduleCell.NameOfWeek = dayOfWeek;
                 time.AddMinutes(15);

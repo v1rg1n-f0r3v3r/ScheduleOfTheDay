@@ -12,8 +12,8 @@ namespace ScheduleOfTheDay.ViewModel
             DaysCollection cellCollectionM = new DaysCollection();
             var list = cellCollectionM.LoadCollectionOfDays();
             _scheduleCells = new ObservableCollection<CollectionOfDays>(list);
-            var time = GetTimeList();
-            Time = time;
+            _saveCommand = new RelayCommand(obj => { Save(); });
+            Time = GetTimeList();
         }
         private string[] GetTimeList()
         {
@@ -25,6 +25,12 @@ namespace ScheduleOfTheDay.ViewModel
         {
             get {return _scheduleCells;}
             set { _scheduleCells = value; }
+        }
+
+        private RelayCommand _saveCommand;
+        public RelayCommand SaveCommand
+        {
+            get { return _saveCommand; }
         }
 
         private string[] _time;
@@ -39,7 +45,7 @@ namespace ScheduleOfTheDay.ViewModel
             var collection = ScheduleCells.FirstOrDefault(x => x.DayOfWeek == Name);
             if (collection != null)
             {
-                var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.Id == i);
+                var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.SequenceNumber == i);
                 if (cell != null) { cell.IsSelect = true;}
             }
         }
@@ -49,7 +55,7 @@ namespace ScheduleOfTheDay.ViewModel
             var collection = ScheduleCells.FirstOrDefault(x => x.DayOfWeek == Name);
             if (collection != null) 
             {
-                var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.Id == i);
+                var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.SequenceNumber == i);
                 if (cell != null) { cell.IsSelect = false; }
             }
         }
