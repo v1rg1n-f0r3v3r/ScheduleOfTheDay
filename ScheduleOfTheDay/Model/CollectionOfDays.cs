@@ -1,6 +1,7 @@
 ﻿using ScheduleOfTheDay.ViewModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
 namespace ScheduleOfTheDay.Model
 {
     public enum DayOfWeek
