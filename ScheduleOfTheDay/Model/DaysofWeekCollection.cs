@@ -6,23 +6,23 @@ using ScheduleOfTheDay.ViewModel;
 
 namespace ScheduleOfTheDay.Model
 {
-    public class DaysCollection: PropertyChange
+    public class DaysofWeekCollection: PropertyChange
     {
         int count = 0;
-        public DaysCollection()
+        public DaysofWeekCollection()
         {
             count = 96;
         }
 
         string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
 
-        public List<CollectionOfDays> LoadCollectionOfDays()
+        public List<DaysOfWeek> LoadCollectionOfDays()
         {
-            List<CollectionOfDays> collectionOfDays = new List<CollectionOfDays>();
+            List<DaysOfWeek> collectionOfDays = new List<DaysOfWeek>();
             int i = 0;
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
-                CollectionOfDays collectionOfDay = new CollectionOfDays();
+                DaysOfWeek collectionOfDay = new DaysOfWeek();
 
                 collectionOfDay.DayOfWeek = day;
                 if (File.Exists(Path))
@@ -31,7 +31,7 @@ namespace ScheduleOfTheDay.Model
                 }
                 else
                 {
-                    collectionOfDay.ScheduleCellsOfDay = LoadCells(day);
+                    collectionOfDay.ScheduleCellsOfDay = GenerateNewCells(day);
                 }
                 collectionOfDays.Add(collectionOfDay);
                 i++;
@@ -42,28 +42,21 @@ namespace ScheduleOfTheDay.Model
         private ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
         {
             StreamReader sr = new StreamReader(Path);
-            DateTime time = new DateTime();
+            DateTime time = DateTime.Parse("00:00:00 PM");
             ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
             int i = 0;
             while (!sr.EndOfStream)
             {
                 ScheduleCell scheduleCell = new ScheduleCell();
-                time.AddMinutes(15);
                 scheduleCell.NameOfWeek = dayOfWeek;
                 scheduleCell.Time = time;
+                time = time.AddMinutes(-15);
                 scheduleCell.SequenceNumber = i;
                 string status = sr.ReadLine();
                 string[] statusWords = status.Split(' ');
                 if (statusWords[0] == dayOfWeek.ToString())
                 {
-                    if (statusWords[1] == "True")
-                    {
-                        scheduleCell.IsSelect = true;
-                    }
-                    else
-                    {
-                        scheduleCell.IsSelect = false;
-                    }
+                    scheduleCell.IsSelect = statusWords[1] == "True";
                     scheduleCells.Add(scheduleCell);
                     i++;
                 }
@@ -71,9 +64,9 @@ namespace ScheduleOfTheDay.Model
             return scheduleCells;
         }
 
-        private ObservableCollection<ScheduleCell> LoadCells(DayOfWeek dayOfWeek)
+        private ObservableCollection<ScheduleCell> GenerateNewCells(DayOfWeek dayOfWeek)
         {
-            DateTime time = new DateTime();
+            DateTime time = DateTime.Parse("00:00:00 AM");
             ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
             for (int i = 0; i < count; i++)
             {
@@ -81,8 +74,8 @@ namespace ScheduleOfTheDay.Model
                 scheduleCell.SequenceNumber = i;
                 scheduleCell.IsSelect = false;
                 scheduleCell.NameOfWeek = dayOfWeek;
-                time.AddMinutes(15);
                 scheduleCell.Time = time;
+                time = time.AddMinutes(-15);
                 scheduleCells.Add(scheduleCell);
             }
             return scheduleCells;

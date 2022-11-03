@@ -9,7 +9,7 @@
              d:DesignHeight="400" d:DesignWidth="1700" PreviewMouseMove="UserControl_PreviewMouseMove">
     <UserControl.Resources>
         <converter:EnumDescripConverter x:Key="DescripConverter" ></converter:EnumDescripConverter>
-        <converter:IdBooleanConverter x:Key="IdToBoolean" ></converter:IdBooleanConverter>
+        <converter:SequenceNumberToBooleanConverter x:Key="IdToBoolean" ></converter:SequenceNumberToBooleanConverter>
         <Style TargetType="{x:Type Label}">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -26,8 +26,8 @@
         </Style>
     </UserControl.Resources>
     <Grid Background="White">
-        
-        <ItemsControl ItemsSource="{Binding Time}" Margin="109,100,0,20">
+
+        <ItemsControl ItemsSource="{Binding HeaderTime}" Margin="109,100,0,20">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Margin="0" IsItemsHost="True" Orientation="Horizontal"></VirtualizingStackPanel>
@@ -66,6 +66,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         
-        <Button x:Name="SaveButton" Height="50" Width="150" Content="Save" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SaveButton_Click"></Button>
+        <Button Command="{Binding SaveCommand}" Height="50" Width="150" Content="Save" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
     </Grid>
 </UserControl>

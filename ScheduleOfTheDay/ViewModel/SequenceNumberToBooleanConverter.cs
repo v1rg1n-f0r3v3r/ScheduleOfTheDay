@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace ScheduleOfTheDay.ViewModel
 {
-    public class IdBooleanConverter : IValueConverter
+    public class SequenceNumberToBooleanConverter : IValueConverter
     {
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

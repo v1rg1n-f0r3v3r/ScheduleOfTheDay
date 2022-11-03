@@ -24,14 +24,14 @@ namespace ScheduleOfTheDay.View
                 {
                     if (p.Tag != null)
                     {
-                        viewmodel.FindParentTrue((DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
+                        viewmodel.ChangeCellStatus((DayOfWeek)p.Tag, Convert.ToInt32(p.Content), true);
                     }
                 }
                 if (e.RightButton.ToString() == "Pressed")
                 {
                     if (p.Tag != null) 
                     {
-                        viewmodel.FindParentFalse((DayOfWeek)p.Tag, Convert.ToInt32(p.Content));
+                        viewmodel.ChangeCellStatus((DayOfWeek)p.Tag, Convert.ToInt32(p.Content), false);
                     }
                 }
             }
@@ -53,13 +53,6 @@ namespace ScheduleOfTheDay.View
         public static T GetElementUnderMouse<T>() where T : UIElement
         {
             return FindVisualParent<T>(Mouse.DirectlyOver as UIElement);
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            var viewmodel = (DayScheduleViewModel)DataContext;
-            viewmodel.SaveCommand.Execute(null);
-            MessageBox.Show("DataSaved");
         }
     }
 }

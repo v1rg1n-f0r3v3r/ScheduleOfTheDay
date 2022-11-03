@@ -22,7 +22,7 @@ namespace ScheduleOfTheDay.Model
         Sunday
     }
 
-    public class CollectionOfDays : PropertyChange
+    public class DaysOfWeek : PropertyChange
     {
         private DayOfWeek _dayOfWeek;
         public DayOfWeek DayOfWeek 

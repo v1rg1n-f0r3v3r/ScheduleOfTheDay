@@ -1,7 +1,9 @@
 ﻿using ScheduleOfTheDay.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace ScheduleOfTheDay.ViewModel
 {
@@ -9,19 +11,26 @@ namespace ScheduleOfTheDay.ViewModel
     {
         public DayScheduleViewModel()
         {
-            DaysCollection cellCollectionM = new DaysCollection();
+            DaysofWeekCollection cellCollectionM = new DaysofWeekCollection();
             var list = cellCollectionM.LoadCollectionOfDays();
-            _scheduleCells = new ObservableCollection<CollectionOfDays>(list);
+            _scheduleCells = new ObservableCollection<DaysOfWeek>(list);
             _saveCommand = new RelayCommand(obj => { Save(); });
-            Time = GetTimeList();
+            HeaderTime = GetTimeList();
         }
         private string[] GetTimeList()
         {
-            string[] list = { "02:00", "04:00", "06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00", "00:00" };
+            DateTime time = DateTime.Parse("02:00:00 AM");
+            string[] list = new string[13];
+            for (int i = 0; i < 13; i++)
+            {
+                string listItem = time.ToString("HH:mm");
+                time = time.AddHours(2);
+                list[i] = listItem;
+            }
             return list;
         }
-        private ObservableCollection<CollectionOfDays> _scheduleCells;
-        public ObservableCollection<CollectionOfDays> ScheduleCells
+        private ObservableCollection<DaysOfWeek> _scheduleCells;
+        public ObservableCollection<DaysOfWeek> ScheduleCells
         {
             get {return _scheduleCells;}
             set { _scheduleCells = value; }
@@ -33,30 +42,20 @@ namespace ScheduleOfTheDay.ViewModel
             get { return _saveCommand; }
         }
 
-        private string[] _time;
-        public string[] Time
+        private string[] _headerTime;
+        public string[] HeaderTime
         {
-            get { return _time; }
-            set { _time = value; }
+            get { return _headerTime; }
+            set { _headerTime = value; }
         }
 
-        public void FindParentTrue(DayOfWeek Name, int i)
+        public void ChangeCellStatus(Model.DayOfWeek Name, int i, bool property)
         {
             var collection = ScheduleCells.FirstOrDefault(x => x.DayOfWeek == Name);
             if (collection != null)
             {
                 var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.SequenceNumber == i);
-                if (cell != null) { cell.IsSelect = true;}
-            }
-        }
-
-        public void FindParentFalse(DayOfWeek Name, int i)
-        {
-            var collection = ScheduleCells.FirstOrDefault(x => x.DayOfWeek == Name);
-            if (collection != null) 
-            {
-                var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.SequenceNumber == i);
-                if (cell != null) { cell.IsSelect = false; }
+                if (cell != null) { cell.IsSelect = property; }
             }
         }
 
@@ -76,6 +75,7 @@ namespace ScheduleOfTheDay.ViewModel
                 }
             }
             sw.Close();
+            MessageBox.Show("DataSaved");
         }
     }
 }
