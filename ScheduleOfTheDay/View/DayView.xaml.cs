@@ -1,37 +1,41 @@
-﻿using System;
+﻿using ScheduleOfTheDay.ViewModel;
+using System;
+using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using ScheduleOfTheDay.ViewModel;
-using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.View
 {
-    public partial class DayScheduleView : UserControl
+    /// <summary>
+    /// Логика взаимодействия для DayView.xaml
+    /// </summary>
+    public partial class DayView : UserControl
     {
-        public DayScheduleView()
+        public DayView()
         {
             InitializeComponent();
         }
-        private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
+
+        private void UserControl_MouseMove(object sender, MouseEventArgs e)
         {
-            var viewmodel = (DayScheduleViewModel)DataContext;
+            var viewmodel = (DayCellViewModel)DataContext;
             Label p = GetElementUnderMouse<Label>();
-            if (p != null) 
-            { 
+            if (p != null)
+            {
                 if (e.LeftButton.ToString() == "Pressed")
                 {
                     if (p.Tag != null)
                     {
-                        viewmodel.ChangeCellStatus((DayOfWeek)p.Tag, Convert.ToInt32(p.Content), true);
+                        viewmodel.ChangeCellStatus(Convert.ToInt32(p.Content), true);
                     }
                 }
                 if (e.RightButton.ToString() == "Pressed")
                 {
-                    if (p.Tag != null) 
+                    if (p.Tag != null)
                     {
-                        viewmodel.ChangeCellStatus((DayOfWeek)p.Tag, Convert.ToInt32(p.Content), false);
+                        viewmodel.ChangeCellStatus(Convert.ToInt32(p.Content), false);
                     }
                 }
             }

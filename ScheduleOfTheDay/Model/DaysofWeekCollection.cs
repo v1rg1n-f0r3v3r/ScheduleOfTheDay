@@ -16,30 +16,22 @@ namespace ScheduleOfTheDay.Model
 
         string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
 
-        public List<DaysOfWeek> LoadCollectionOfDays()
+        public ObservableCollection<DaysOfWeek> LoadCollectionOfDays()
         {
-            List<DaysOfWeek> collectionOfDays = new List<DaysOfWeek>();
+            ObservableCollection<DaysOfWeek> collectionOfDays = new ObservableCollection<DaysOfWeek>();
             int i = 0;
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
                 DaysOfWeek collectionOfDay = new DaysOfWeek();
-
+                collectionOfDay.DataContextOfTheDay = new DayCellViewModel(day);
                 collectionOfDay.DayOfWeek = day;
-                if (File.Exists(Path))
-                {
-                    collectionOfDay.ScheduleCellsOfDay = LoadCellsFromFile(day);
-                }
-                else
-                {
-                    collectionOfDay.ScheduleCellsOfDay = GenerateNewCells(day);
-                }
                 collectionOfDays.Add(collectionOfDay);
                 i++;
             }
             return collectionOfDays;
         }
 
-        private ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
+        public ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
         {
             StreamReader sr = new StreamReader(Path);
             DateTime time = DateTime.Parse("00:00:00 PM");
@@ -64,7 +56,7 @@ namespace ScheduleOfTheDay.Model
             return scheduleCells;
         }
 
-        private ObservableCollection<ScheduleCell> GenerateNewCells(DayOfWeek dayOfWeek)
+        public ObservableCollection<ScheduleCell> GenerateNewCells(DayOfWeek dayOfWeek)
         {
             DateTime time = DateTime.Parse("00:00:00 AM");
             ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();

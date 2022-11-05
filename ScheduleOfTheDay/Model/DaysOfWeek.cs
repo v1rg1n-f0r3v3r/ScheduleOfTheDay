@@ -34,13 +34,14 @@ namespace ScheduleOfTheDay.Model
                 OnPropertyChanged(); 
             }
         }
-        private ObservableCollection<ScheduleCell> _scheduleCellsOfDay;
-        public ObservableCollection<ScheduleCell> ScheduleCellsOfDay 
-        { 
-            get { return _scheduleCellsOfDay; } 
-            set 
-            { 
-                _scheduleCellsOfDay = value; 
+
+        private DayCellViewModel _dataContextOfTheDay;
+        public DayCellViewModel DataContextOfTheDay
+        {
+            get { return _dataContextOfTheDay; }
+            set
+            {
+                _dataContextOfTheDay = value;
                 OnPropertyChanged();
             }
         }

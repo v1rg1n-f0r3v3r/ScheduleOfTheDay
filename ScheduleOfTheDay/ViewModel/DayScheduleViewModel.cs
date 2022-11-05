@@ -11,9 +11,9 @@ namespace ScheduleOfTheDay.ViewModel
     {
         public DayScheduleViewModel()
         {
-            DaysofWeekCollection cellCollectionM = new DaysofWeekCollection();
-            var list = cellCollectionM.LoadCollectionOfDays();
-            _scheduleCells = new ObservableCollection<DaysOfWeek>(list);
+            DaysofWeekCollection cellCollection = new DaysofWeekCollection();
+            var list = cellCollection.LoadCollectionOfDays();
+            _dayRows = new ObservableCollection<DaysOfWeek>(list);
             _saveCommand = new RelayCommand(obj => { Save(); });
             HeaderTime = GetTimeList();
         }
@@ -29,11 +29,11 @@ namespace ScheduleOfTheDay.ViewModel
             }
             return list;
         }
-        private ObservableCollection<DaysOfWeek> _scheduleCells;
-        public ObservableCollection<DaysOfWeek> ScheduleCells
+        private ObservableCollection<DaysOfWeek> _dayRows;
+        public ObservableCollection<DaysOfWeek> DayRows
         {
-            get {return _scheduleCells;}
-            set { _scheduleCells = value; }
+            get {return _dayRows; }
+            set { _dayRows = value; }
         }
 
         private RelayCommand _saveCommand;
@@ -49,28 +49,19 @@ namespace ScheduleOfTheDay.ViewModel
             set { _headerTime = value; }
         }
 
-        public void ChangeCellStatus(Model.DayOfWeek Name, int i, bool property)
-        {
-            var collection = ScheduleCells.FirstOrDefault(x => x.DayOfWeek == Name);
-            if (collection != null)
-            {
-                var cell = collection.ScheduleCellsOfDay.FirstOrDefault(x => x.SequenceNumber == i);
-                if (cell != null) { cell.IsSelect = property; }
-            }
-        }
-
         public void Save()
         {
             string path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
             StreamWriter sw = new StreamWriter(path);
-            foreach (var collections in ScheduleCells)
+            foreach (var collections in DayRows)
             {
-                var collection = ScheduleCells.FirstOrDefault(x => x.DayOfWeek == collections.DayOfWeek);
+                var collection = DayRows.FirstOrDefault(x => x.DayOfWeek == collections.DayOfWeek);
                 if (collection != null)
                 {
-                    foreach (var cur in collection.ScheduleCellsOfDay)
+                    DayCellViewModel dayCellViewModel = collection.DataContextOfTheDay;
+                    foreach (var cellCollection in dayCellViewModel.CellSchedule)
                     {
-                        sw.WriteLine(cur.NameOfWeek.ToString() + " " + cur.IsSelect);
+                        sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
                     }
                 }
             }
