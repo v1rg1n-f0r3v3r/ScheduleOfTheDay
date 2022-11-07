@@ -20,7 +20,7 @@ namespace ScheduleOfTheDay.View
 
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
         {
-            var viewmodel = (DayCellViewModel)DataContext;
+            var viewmodel = (DayCellsViewModel)DataContext;
             Label p = GetElementUnderMouse<Label>();
             if (p != null)
             {

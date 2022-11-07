@@ -14,7 +14,7 @@ using GUISDK;
 
 namespace ScheduleOfTheDay.ViewModel
 {
-    public class CellScheduleBehavior: Behavior<System.Windows.Controls.ListView>
+    public class BehaviorOfDaysCells: Behavior<System.Windows.Controls.ListView>
     {
         Button button;
         protected override void OnAttached()
@@ -49,6 +49,6 @@ namespace ScheduleOfTheDay.ViewModel
         }
 
         public static readonly DependencyProperty MyPropertyProperty =
-           DependencyProperty.Register(nameof(SetTrueCommand), typeof(ICommand), typeof(CellScheduleBehavior), new PropertyMetadata(null));
+           DependencyProperty.Register(nameof(SetTrueCommand), typeof(ICommand), typeof(BehaviorOfDaysCells), new PropertyMetadata(null));
     }
 }

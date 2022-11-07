@@ -35,8 +35,8 @@ namespace ScheduleOfTheDay.Model
             }
         }
 
-        private DayCellViewModel _dataContextOfTheDay;
-        public DayCellViewModel DataContextOfTheDay
+        private DayCellsViewModel _dataContextOfTheDay;
+        public DayCellsViewModel DataContextOfTheDay
         {
             get { return _dataContextOfTheDay; }
             set

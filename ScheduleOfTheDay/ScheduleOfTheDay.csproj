@@ -70,36 +70,42 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\DaysOfWeek.cs" />
-    <Compile Include="Model\DaysofWeekCollection.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ViewModel\CellScheduleBehavior.cs" />
-    <Compile Include="ViewModel\DayScheduleViewModel.cs" />
-    <Compile Include="ViewModel\DayCellViewModel.cs" />
-    <Compile Include="ViewModel\EnumDescripConverter.cs" />
-    <Compile Include="ViewModel\SequenceNumberToBooleanConverter.cs" />
-    <Compile Include="ViewModel\PropertyChange.cs" />
-    <Compile Include="View\DaysScheduleView.xaml.cs">
+    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\BehaviorOfDaysCells.cs" />
+    <Compile Include="ScheduleView\Schedule\DayCells\Cell\CellView.xaml.cs">
+      <DependentUpon>CellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleView\Schedule\DayScheduleViewModel.cs" />
+    <Compile Include="ScheduleView\Schedule\DayCells\DayCellsViewModel.cs" />
+    <Compile Include="Helpers\EnumDescripConverter.cs" />
+    <Compile Include="Helpers\SequenceNumberToBooleanConverter.cs" />
+    <Compile Include="Helpers\PropertyChange.cs" />
+    <Compile Include="ScheduleView\Schedule\DaysScheduleView.xaml.cs">
       <DependentUpon>DaysScheduleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DayView.xaml.cs">
-      <DependentUpon>DayView.xaml</DependentUpon>
+    <Compile Include="ScheduleView\Schedule\DayCells\DayCellsView.xaml.cs">
+      <DependentUpon>DayCellsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="ScheduleView\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\DaysScheduleView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\DayView.xaml">
+    <Page Include="ScheduleView\Schedule\DayCells\Cell\CellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="ScheduleView\Schedule\DaysScheduleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ScheduleView\Schedule\DayCells\DayCellsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScheduleView\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -132,6 +138,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

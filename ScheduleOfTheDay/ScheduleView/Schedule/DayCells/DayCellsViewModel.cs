@@ -1,35 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ScheduleOfTheDay.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using ScheduleOfTheDay.ViewModel;
+using System.Linq;
+using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
-namespace ScheduleOfTheDay.Model
+namespace ScheduleOfTheDay.ViewModel
 {
-    public class DaysofWeekCollection: PropertyChange
+    public class DayCellsViewModel: PropertyChange
     {
         int count = 0;
-        public DaysofWeekCollection()
+        public DayCellsViewModel(Model.DayOfWeek dayOfWeek)
         {
             count = 96;
+            ObservableCollection<ScheduleCell> list;
+            if (File.Exists(Directory.GetCurrentDirectory() + "/SaveLogAll.txt"))
+            {
+                list = LoadCellsFromFile(dayOfWeek);
+            }
+            else
+            {
+                list = GenerateNewCells(dayOfWeek);
+            }
+            _cellSchedule = new ObservableCollection<ScheduleCell>(list);
+        }
+
+        private ObservableCollection<ScheduleCell> _cellSchedule;
+        public ObservableCollection<ScheduleCell> CellSchedule
+        {
+            get { return _cellSchedule; }
+            set { _cellSchedule = value; }
+        }
+
+        public void ChangeCellStatus(int i, bool property)
+        {
+            var cell = CellSchedule.FirstOrDefault(x => x.SequenceNumber == i);
+            if (cell != null) { cell.IsSelect = property; }
         }
 
         string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
-
-        public ObservableCollection<DaysOfWeek> LoadCollectionOfDays()
-        {
-            ObservableCollection<DaysOfWeek> collectionOfDays = new ObservableCollection<DaysOfWeek>();
-            int i = 0;
-            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
-            {
-                DaysOfWeek collectionOfDay = new DaysOfWeek();
-                collectionOfDay.DataContextOfTheDay = new DayCellViewModel(day);
-                collectionOfDay.DayOfWeek = day;
-                collectionOfDays.Add(collectionOfDay);
-                i++;
-            }
-            return collectionOfDays;
-        }
 
         public ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
         {

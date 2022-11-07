@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.ViewModel
 {
@@ -11,8 +12,7 @@ namespace ScheduleOfTheDay.ViewModel
     {
         public DayScheduleViewModel()
         {
-            DaysofWeekCollection cellCollection = new DaysofWeekCollection();
-            var list = cellCollection.LoadCollectionOfDays();
+            var list = LoadCollectionOfDays();
             _dayRows = new ObservableCollection<DaysOfWeek>(list);
             _saveCommand = new RelayCommand(obj => { Save(); });
             HeaderTime = GetTimeList();
@@ -58,7 +58,7 @@ namespace ScheduleOfTheDay.ViewModel
                 var collection = DayRows.FirstOrDefault(x => x.DayOfWeek == collections.DayOfWeek);
                 if (collection != null)
                 {
-                    DayCellViewModel dayCellViewModel = collection.DataContextOfTheDay;
+                    DayCellsViewModel dayCellViewModel = collection.DataContextOfTheDay;
                     foreach (var cellCollection in dayCellViewModel.CellSchedule)
                     {
                         sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
@@ -67,6 +67,20 @@ namespace ScheduleOfTheDay.ViewModel
             }
             sw.Close();
             MessageBox.Show("DataSaved");
+        }
+        private ObservableCollection<DaysOfWeek> LoadCollectionOfDays()
+        {
+            ObservableCollection<DaysOfWeek> collectionOfDays = new ObservableCollection<DaysOfWeek>();
+            int i = 0;
+            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
+            {
+                DaysOfWeek collectionOfDay = new DaysOfWeek();
+                collectionOfDay.DataContextOfTheDay = new DayCellsViewModel(day);
+                collectionOfDay.DayOfWeek = day;
+                collectionOfDays.Add(collectionOfDay);
+                i++;
+            }
+            return collectionOfDays;
         }
     }
 }
