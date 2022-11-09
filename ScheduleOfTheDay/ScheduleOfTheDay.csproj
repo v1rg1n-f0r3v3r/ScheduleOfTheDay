@@ -72,18 +72,19 @@
     <Compile Include="Model\DaysOfWeek.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\BehaviorOfDaysCells.cs" />
-    <Compile Include="ScheduleView\Schedule\DayCells\Cell\CellView.xaml.cs">
+    <Compile Include="ScheduleView\Cell\CellView.xaml.cs">
       <DependentUpon>CellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScheduleView\Cell\CelViewModel.cs" />
     <Compile Include="ScheduleView\Schedule\DayScheduleViewModel.cs" />
-    <Compile Include="ScheduleView\Schedule\DayCells\DayCellsViewModel.cs" />
+    <Compile Include="ScheduleView\Day\DayCellsViewModel.cs" />
     <Compile Include="Helpers\EnumDescripConverter.cs" />
     <Compile Include="Helpers\SequenceNumberToBooleanConverter.cs" />
     <Compile Include="Helpers\PropertyChange.cs" />
     <Compile Include="ScheduleView\Schedule\DaysScheduleView.xaml.cs">
       <DependentUpon>DaysScheduleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ScheduleView\Schedule\DayCells\DayCellsView.xaml.cs">
+    <Compile Include="ScheduleView\Day\DayCellsView.xaml.cs">
       <DependentUpon>DayCellsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScheduleView\MainWindow.xaml.cs">
@@ -93,7 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ScheduleView\Schedule\DayCells\Cell\CellView.xaml">
+    <Page Include="ScheduleView\Cell\CellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,7 +102,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ScheduleView\Schedule\DayCells\DayCellsView.xaml">
+    <Page Include="ScheduleView\Day\DayCellsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,6 +130,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

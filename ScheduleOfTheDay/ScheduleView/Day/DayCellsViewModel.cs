@@ -7,22 +7,28 @@ using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.ViewModel
 {
-    public class DayCellsViewModel: PropertyChange
+    public class DayCellsViewModel : PropertyChange
     {
         int count = 0;
-        public DayCellsViewModel(Model.DayOfWeek dayOfWeek)
+        public DayCellsViewModel(DayOfWeek day)
         {
             count = 96;
-            ObservableCollection<ScheduleCell> list;
-            if (File.Exists(Directory.GetCurrentDirectory() + "/SaveLogAll.txt"))
+            if (File.Exists(Path))
             {
-                list = LoadCellsFromFile(dayOfWeek);
+                CellSchedule = LoadCellsFromFile(day);
             }
             else
             {
-                list = GenerateNewCells(dayOfWeek);
+                CellSchedule = GenerateNewCells(day);
             }
-            _cellSchedule = new ObservableCollection<ScheduleCell>(list);
+            NameOfDay = day;
+        }
+
+        private DayOfWeek _dayOfWeek;
+        public DayOfWeek NameOfDay
+        {
+            get { return _dayOfWeek; }
+            set { _dayOfWeek = value; }
         }
 
         private ObservableCollection<ScheduleCell> _cellSchedule;
@@ -32,15 +38,9 @@ namespace ScheduleOfTheDay.ViewModel
             set { _cellSchedule = value; }
         }
 
-        public void ChangeCellStatus(int i, bool property)
-        {
-            var cell = CellSchedule.FirstOrDefault(x => x.SequenceNumber == i);
-            if (cell != null) { cell.IsSelect = property; }
-        }
-
         string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
 
-        public ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
+        private ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
         {
             StreamReader sr = new StreamReader(Path);
             DateTime time = DateTime.Parse("00:00:00 PM");
@@ -65,7 +65,7 @@ namespace ScheduleOfTheDay.ViewModel
             return scheduleCells;
         }
 
-        public ObservableCollection<ScheduleCell> GenerateNewCells(DayOfWeek dayOfWeek)
+        private ObservableCollection<ScheduleCell> GenerateNewCells(DayOfWeek dayOfWeek)
         {
             DateTime time = DateTime.Parse("00:00:00 AM");
             ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
@@ -80,6 +80,12 @@ namespace ScheduleOfTheDay.ViewModel
                 scheduleCells.Add(scheduleCell);
             }
             return scheduleCells;
+        }
+
+        public void ChangeCellStatus(int i, bool property)
+        {
+            var cell = CellSchedule.FirstOrDefault(x => x.SequenceNumber == i);
+            if (cell != null) { cell.IsSelect = property; }
         }
     }
 }

@@ -15,8 +15,9 @@ namespace ScheduleOfTheDay.ViewModel
             var list = LoadCollectionOfDays();
             _dayRows = new ObservableCollection<DaysOfWeek>(list);
             _saveCommand = new RelayCommand(obj => { Save(); });
-            HeaderTime = GetTimeList();
+            HeaderTime = GetTimeList(); 
         }
+
         private string[] GetTimeList()
         {
             DateTime time = DateTime.Parse("02:00:00 AM");
@@ -32,7 +33,7 @@ namespace ScheduleOfTheDay.ViewModel
         private ObservableCollection<DaysOfWeek> _dayRows;
         public ObservableCollection<DaysOfWeek> DayRows
         {
-            get {return _dayRows; }
+            get { return _dayRows; }
             set { _dayRows = value; }
         }
 
@@ -51,23 +52,23 @@ namespace ScheduleOfTheDay.ViewModel
 
         public void Save()
         {
-            string path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
-            StreamWriter sw = new StreamWriter(path);
+            StreamWriter sw = new StreamWriter(Path);
             foreach (var collections in DayRows)
             {
                 var collection = DayRows.FirstOrDefault(x => x.DayOfWeek == collections.DayOfWeek);
                 if (collection != null)
                 {
-                    DayCellsViewModel dayCellViewModel = collection.DataContextOfTheDay;
-                    foreach (var cellCollection in dayCellViewModel.CellSchedule)
-                    {
-                        sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
-                    }
+                    //DayCellsViewModel dayCellViewModel = collection.DataContextOfTheDay;
+                    //foreach (var cellCollection in dayCellViewModel.CellSchedule)
+                    //{
+                    //    sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
+                    //}
                 }
             }
             sw.Close();
             MessageBox.Show("DataSaved");
         }
+
         private ObservableCollection<DaysOfWeek> LoadCollectionOfDays()
         {
             ObservableCollection<DaysOfWeek> collectionOfDays = new ObservableCollection<DaysOfWeek>();
@@ -75,12 +76,13 @@ namespace ScheduleOfTheDay.ViewModel
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
                 DaysOfWeek collectionOfDay = new DaysOfWeek();
-                collectionOfDay.DataContextOfTheDay = new DayCellsViewModel(day);
                 collectionOfDay.DayOfWeek = day;
                 collectionOfDays.Add(collectionOfDay);
                 i++;
             }
             return collectionOfDays;
         }
+
+        string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
     }
 }

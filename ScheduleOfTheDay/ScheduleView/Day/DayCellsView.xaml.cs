@@ -8,9 +8,6 @@ using System.Windows.Media;
 
 namespace ScheduleOfTheDay.View
 {
-    /// <summary>
-    /// Логика взаимодействия для DayView.xaml
-    /// </summary>
     public partial class DayView : UserControl
     {
         public DayView()

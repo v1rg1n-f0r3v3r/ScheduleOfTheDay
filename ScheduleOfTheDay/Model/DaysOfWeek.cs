@@ -34,16 +34,5 @@ namespace ScheduleOfTheDay.Model
                 OnPropertyChanged(); 
             }
         }
-
-        private DayCellsViewModel _dataContextOfTheDay;
-        public DayCellsViewModel DataContextOfTheDay
-        {
-            get { return _dataContextOfTheDay; }
-            set
-            {
-                _dataContextOfTheDay = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }

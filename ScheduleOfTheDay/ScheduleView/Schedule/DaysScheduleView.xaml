@@ -3,14 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:converter="clr-namespace:ScheduleOfTheDay.ViewModel"
+             xmlns:dc="clr-namespace:ScheduleOfTheDay.ViewModel"
              xmlns:uc="clr-namespace:ScheduleOfTheDay.View"
              xmlns:custombehavior="clr-namespace:ScheduleOfTheDay.ViewModel"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance dc:DayScheduleViewModel}"
              d:DesignHeight="400" d:DesignWidth="1700">
-    <UserControl.Resources>
-        <converter:EnumDescripConverter x:Key="DescripConverter" ></converter:EnumDescripConverter>
-    </UserControl.Resources>
     <Grid Background="White">
         <ItemsControl ItemsSource="{Binding HeaderTime}" Margin="109,100,0,20">
             <ItemsControl.ItemsPanel>
@@ -31,8 +29,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0 0 10 3" Width="80" Text="{Binding DayOfWeek, Converter={StaticResource DescripConverter}}"></TextBlock>
-                        <uc:DayView DataContext="{Binding DataContextOfTheDay}"></uc:DayView>
+                        <uc:DayView></uc:DayView>
                     </StackPanel>
                 </DataTemplate>                
             </ItemsControl.ItemTemplate>
