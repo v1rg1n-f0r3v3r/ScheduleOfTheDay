@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:uc="clr-namespace:ScheduleOfTheDay.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="1700" ResizeMode="NoResize">
+        Title="MainWindow" Height="400" Width="1700" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <uc:DayScheduleView x:Name="SheduleView"></uc:DayScheduleView>
     </Grid>

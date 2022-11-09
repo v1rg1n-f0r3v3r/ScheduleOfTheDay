@@ -25,13 +25,24 @@ namespace ScheduleOfTheDay.Model
     public class DaysOfWeek : PropertyChange
     {
         private DayOfWeek _dayOfWeek;
-        public DayOfWeek DayOfWeek 
+        public DayOfWeek DayOfWeek
         {
             get { return _dayOfWeek; }
-            set 
-            { 
-                _dayOfWeek = value; 
-                OnPropertyChanged(); 
+            set
+            {
+                _dayOfWeek = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<ScheduleCell> _scheduleCells;
+        public ObservableCollection<ScheduleCell> ScheduleCells
+        {
+            get { return _scheduleCells; }
+            set
+            {
+                _scheduleCells = value;
+                OnPropertyChanged();
             }
         }
     }

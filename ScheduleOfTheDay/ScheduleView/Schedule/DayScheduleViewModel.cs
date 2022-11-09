@@ -10,8 +10,10 @@ namespace ScheduleOfTheDay.ViewModel
 {
     public class DayScheduleViewModel : PropertyChange
     {
+        int count = 0;
         public DayScheduleViewModel()
         {
+            count = 96;
             var list = LoadCollectionOfDays();
             _dayRows = new ObservableCollection<DaysOfWeek>(list);
             _saveCommand = new RelayCommand(obj => { Save(); });

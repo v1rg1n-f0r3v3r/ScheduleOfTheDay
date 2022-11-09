@@ -1,5 +1,6 @@
 ﻿using ScheduleOfTheDay.ViewModel;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ScheduleOfTheDay.View
 {

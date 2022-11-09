@@ -28,9 +28,7 @@
         <ItemsControl  Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding DayRows}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <uc:DayView></uc:DayView>
-                    </StackPanel>
+                    <uc:DayView></uc:DayView>
                 </DataTemplate>                
             </ItemsControl.ItemTemplate>
         </ItemsControl>
