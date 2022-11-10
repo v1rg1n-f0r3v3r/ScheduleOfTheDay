@@ -1,4 +1,4 @@
-﻿using ScheduleOfTheDay.Model;
+﻿using ScheduleOfTheDay.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -13,7 +13,7 @@ namespace ScheduleOfTheDay.ViewModel
         public DayScheduleViewModel()
         {
             var list = LoadCollectionOfDays();
-            DaysCollection = new ObservableCollection<DayCellsViewModel>(list);
+            Days = new ObservableCollection<DayCellsViewModel>(list);
             SaveCommand = new RelayCommand(obj => { Save(); });
             HeaderTime = GetTimeList();
         }
@@ -22,31 +22,26 @@ namespace ScheduleOfTheDay.ViewModel
         private string[] GetTimeList()
         {
             var time = DateTime.Parse("02:00:00 AM");
-            string[] list = new string[13];
+            var listOfTimeHeader = new string[13];
             for (int i = 0; i < 13; i++)
             {
                 string listItem = time.ToString("HH:mm");
                 time = time.AddHours(2);
-                list[i] = listItem;
+                listOfTimeHeader[i] = listItem;
             }
-            return list;
+            return listOfTimeHeader;
         }
 
-        public ObservableCollection<DayCellsViewModel> DaysCollection { get; set; }
+        public ObservableCollection<DayCellsViewModel> Days { get;}
 
-        private string[] _headerTime;
-        public string[] HeaderTime
-        {
-            get { return _headerTime; }
-            set { _headerTime = value; }
-        }
+        public string[] HeaderTime { get; }
 
-        public void Save()
+        private void Save()
         {
-            var sw = new StreamWriter(Path);
-            foreach (var collections in DaysCollection)
+            var sw = new StreamWriter(Global.Path);
+            foreach (var day in Days)
             {
-                var collection = DaysCollection.FirstOrDefault(x => x.NameOfDay == collections.NameOfDay);
+                var collection = Days.FirstOrDefault(x => x.NameOfDay == day.NameOfDay);
                 if (collection != null)
                 {
                     foreach (var cellCollection in collection.CellSchedule)
@@ -69,7 +64,5 @@ namespace ScheduleOfTheDay.ViewModel
             }
             return collectionOfDays;
         }
-
-        string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
     }
 }
