@@ -1,14 +1,14 @@
 ﻿using ScheduleOfTheDay.ViewModel;
 using System;
+using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.ScheduleView.Cell
 {
-    class CelViewModel: PropertyChange
+    public class CelViewModel: PropertyChange
     {
-        public CelViewModel(int number, bool isSelect, DayOfWeek dayOfWeek)
+        public CelViewModel(int number, DayOfWeek dayOfWeek)
         {
             SequenceNumber = number;
-            IsSelect = isSelect;
             NameOfWeek = dayOfWeek;
         }
 
@@ -41,6 +41,20 @@ namespace ScheduleOfTheDay.ScheduleView.Cell
                 _nameOfWeek = value;
                 OnPropertyChanged();
             }
+        }
+        DateTime _time;
+        public DateTime Time
+        {
+            get { return _time; }
+            set
+            {
+                _time = value;
+                OnPropertyChanged();
+            }
+        }
+        public void ChangeCellStatus(bool property)
+        {
+            IsSelect = property;
         }
     }
 }

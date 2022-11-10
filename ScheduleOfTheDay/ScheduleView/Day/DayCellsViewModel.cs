@@ -1,4 +1,5 @@
 ﻿using ScheduleOfTheDay.Model;
+using ScheduleOfTheDay.ScheduleView.Cell;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -31,8 +32,8 @@ namespace ScheduleOfTheDay.ViewModel
             set { _dayOfWeek = value; }
         }
 
-        private ObservableCollection<ScheduleCell> _cellSchedule;
-        public ObservableCollection<ScheduleCell> CellSchedule
+        private ObservableCollection<CelViewModel> _cellSchedule;
+        public ObservableCollection<CelViewModel> CellSchedule
         {
             get { return _cellSchedule; }
             set { _cellSchedule = value; }
@@ -40,19 +41,17 @@ namespace ScheduleOfTheDay.ViewModel
 
         string Path = Directory.GetCurrentDirectory() + "/SaveLogAll.txt";
 
-        private ObservableCollection<ScheduleCell> LoadCellsFromFile(DayOfWeek dayOfWeek)
+        private ObservableCollection<CelViewModel> LoadCellsFromFile(DayOfWeek dayOfWeek)
         {
             StreamReader sr = new StreamReader(Path);
             DateTime time = DateTime.Parse("00:00:00 PM");
-            ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
+            ObservableCollection<CelViewModel> scheduleCells = new ObservableCollection<CelViewModel>();
             int i = 0;
             while (!sr.EndOfStream)
             {
-                ScheduleCell scheduleCell = new ScheduleCell();
-                scheduleCell.NameOfWeek = dayOfWeek;
+                CelViewModel scheduleCell = new CelViewModel(i,dayOfWeek);
                 scheduleCell.Time = time;
                 time = time.AddMinutes(-15);
-                scheduleCell.SequenceNumber = i;
                 string status = sr.ReadLine();
                 string[] statusWords = status.Split(' ');
                 if (statusWords[0] == dayOfWeek.ToString())
@@ -65,27 +64,19 @@ namespace ScheduleOfTheDay.ViewModel
             return scheduleCells;
         }
 
-        private ObservableCollection<ScheduleCell> GenerateNewCells(DayOfWeek dayOfWeek)
+        private ObservableCollection<CelViewModel> GenerateNewCells(DayOfWeek dayOfWeek)
         {
             DateTime time = DateTime.Parse("00:00:00 AM");
-            ObservableCollection<ScheduleCell> scheduleCells = new ObservableCollection<ScheduleCell>();
+            ObservableCollection<CelViewModel> scheduleCells = new ObservableCollection<CelViewModel>();
             for (int i = 0; i < count; i++)
             {
-                ScheduleCell scheduleCell = new ScheduleCell();
-                scheduleCell.SequenceNumber = i;
+                CelViewModel scheduleCell = new CelViewModel(i,dayOfWeek);
                 scheduleCell.IsSelect = false;
-                scheduleCell.NameOfWeek = dayOfWeek;
                 scheduleCell.Time = time;
                 time = time.AddMinutes(-15);
                 scheduleCells.Add(scheduleCell);
             }
             return scheduleCells;
-        }
-
-        public void ChangeCellStatus(int i, bool property)
-        {
-            var cell = CellSchedule.FirstOrDefault(x => x.SequenceNumber == i);
-            if (cell != null) { cell.IsSelect = property; }
         }
     }
 }

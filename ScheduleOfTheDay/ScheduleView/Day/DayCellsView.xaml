@@ -7,7 +7,7 @@
              xmlns:uc="clr-namespace:ScheduleOfTheDay.View.Schedule.DayCells.Cell"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance converter:DayCellsViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800" MouseMove="UserControl_MouseMove">
+             d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converter:EnumDescripConverter x:Key="DescripConverter"></converter:EnumDescripConverter>
     </UserControl.Resources>

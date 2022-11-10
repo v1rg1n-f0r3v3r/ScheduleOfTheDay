@@ -69,7 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\DaysOfWeek.cs" />
+    <Compile Include="Helpers\DaysOfWeek.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\BehaviorOfDaysCells.cs" />
     <Compile Include="ScheduleView\Cell\CellView.xaml.cs">
@@ -112,7 +112,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ScheduleCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

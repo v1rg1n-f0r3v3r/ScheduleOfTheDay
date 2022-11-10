@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converter="clr-namespace:ScheduleOfTheDay.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="13" d:DesignWidth="13">
+             d:DesignHeight="13" d:DesignWidth="13" MouseMove="UserControl_MouseMove">
     <UserControl.Resources>
         <converter:SequenceNumberToBooleanConverter x:Key="IdToBoolean" ></converter:SequenceNumberToBooleanConverter>
         <Style TargetType="{x:Type Label}">

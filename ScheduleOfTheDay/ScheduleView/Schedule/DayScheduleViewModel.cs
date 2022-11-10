@@ -10,14 +10,12 @@ namespace ScheduleOfTheDay.ViewModel
 {
     public class DayScheduleViewModel : PropertyChange
     {
-        int count = 0;
         public DayScheduleViewModel()
         {
-            count = 96;
             var list = LoadCollectionOfDays();
-            _dayRows = new ObservableCollection<DaysOfWeek>(list);
+            _dayRows = new ObservableCollection<DayCellsViewModel>(list);
             _saveCommand = new RelayCommand(obj => { Save(); });
-            HeaderTime = GetTimeList(); 
+            HeaderTime = GetTimeList();
         }
 
         private string[] GetTimeList()
@@ -32,8 +30,8 @@ namespace ScheduleOfTheDay.ViewModel
             }
             return list;
         }
-        private ObservableCollection<DaysOfWeek> _dayRows;
-        public ObservableCollection<DaysOfWeek> DayRows
+        private ObservableCollection<DayCellsViewModel> _dayRows;
+        public ObservableCollection<DayCellsViewModel> DayRows
         {
             get { return _dayRows; }
             set { _dayRows = value; }
@@ -57,28 +55,26 @@ namespace ScheduleOfTheDay.ViewModel
             StreamWriter sw = new StreamWriter(Path);
             foreach (var collections in DayRows)
             {
-                var collection = DayRows.FirstOrDefault(x => x.DayOfWeek == collections.DayOfWeek);
+                var collection = DayRows.FirstOrDefault(x => x.NameOfDay == collections.NameOfDay);
                 if (collection != null)
                 {
-                    //DayCellsViewModel dayCellViewModel = collection.DataContextOfTheDay;
-                    //foreach (var cellCollection in dayCellViewModel.CellSchedule)
-                    //{
-                    //    sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
-                    //}
+                    foreach (var cellCollection in collection.CellSchedule)
+                    {
+                        sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
+                    }
                 }
             }
             sw.Close();
             MessageBox.Show("DataSaved");
         }
 
-        private ObservableCollection<DaysOfWeek> LoadCollectionOfDays()
+        private ObservableCollection<DayCellsViewModel> LoadCollectionOfDays()
         {
-            ObservableCollection<DaysOfWeek> collectionOfDays = new ObservableCollection<DaysOfWeek>();
+            ObservableCollection<DayCellsViewModel> collectionOfDays = new ObservableCollection<DayCellsViewModel>();
             int i = 0;
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
-                DaysOfWeek collectionOfDay = new DaysOfWeek();
-                collectionOfDay.DayOfWeek = day;
+                DayCellsViewModel collectionOfDay = new DayCellsViewModel(day);
                 collectionOfDays.Add(collectionOfDay);
                 i++;
             }
