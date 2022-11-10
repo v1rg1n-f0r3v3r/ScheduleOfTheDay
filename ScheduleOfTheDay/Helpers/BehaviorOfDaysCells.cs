@@ -1,54 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ScheduleOfTheDay.Model;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ScheduleOfTheDay.ScheduleView.Cell;
+using System.Data.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
-using ScheduleOfTheDay.ViewModel;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
-using GUISDK;
+using System.Windows.Interactivity;
+using System.Windows.Media;
 
 namespace ScheduleOfTheDay.ViewModel
 {
-    public class BehaviorOfDaysCells: Behavior<System.Windows.Controls.ListView>
+    public class BehaviorOfDaysCells: Behavior<System.Windows.Controls.Label>
     {
-        Button button;
         protected override void OnAttached()
         {
-            AssociatedObject.Loaded += LoadedLV;
+            AssociatedObject.MouseMove += UserControl_MouseMove;
         }
 
-        private void LoadedLV(object sender, EventArgs e)
+        private void UserControl_MouseMove(object sender, MouseEventArgs e)
         {
-            button = AssociatedObject.FindChild<Button>();
-            button.MouseRightButtonDown += CellClickRight;
-            button.Click += CellClickLeft;
+            var viewmodel = (CelViewModel)AssociatedObject.DataContext;
+            Label p = GetElementUnderMouse<Label>();
+            if (p != null)
+            {
+                if (e.LeftButton.ToString() == "Pressed")
+                {
+                    if (p.Tag != null)
+                    {
+                        viewmodel.ChangeCellStatus(true);
+                    }
+                }
+                if (e.RightButton.ToString() == "Pressed")
+                {
+                    if (p.Tag != null)
+                    {
+                        viewmodel.ChangeCellStatus(false);
+                    }
+                }
+            }
         }
+
         protected override void OnDetaching()
         {
-            button.MouseRightButtonDown -= CellClickRight;
-            button.Click -= CellClickLeft;
+            AssociatedObject.MouseMove -= UserControl_MouseMove;
         }
 
-        private void CellClickLeft(object sender, EventArgs e)
+        public static T FindVisualParent<T>(UIElement element) where T : UIElement
         {
-            SetTrueCommand.Execute(null);
+            UIElement parent = element;
+            while (parent != null)
+            {
+                var correctlyTyped = parent as T;
+                if (correctlyTyped != null)
+                {
+                    return correctlyTyped;
+                }
+                parent = VisualTreeHelper.GetParent(parent) as UIElement;
+            }
+            return null;
         }
-        private void CellClickRight(object sender, EventArgs e)
+        public static T GetElementUnderMouse<T>() where T : UIElement
         {
+            return FindVisualParent<T>(Mouse.DirectlyOver as UIElement);
         }
-
-        public ICommand SetTrueCommand
-        {
-            get { return (ICommand)GetValue(MyPropertyProperty); }
-            set { SetValue(MyPropertyProperty, value); }
-        }
-
-        public static readonly DependencyProperty MyPropertyProperty =
-           DependencyProperty.Register(nameof(SetTrueCommand), typeof(ICommand), typeof(BehaviorOfDaysCells), new PropertyMetadata(null));
     }
 }

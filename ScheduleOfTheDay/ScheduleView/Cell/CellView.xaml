@@ -1,11 +1,13 @@
 ﻿<UserControl x:Class="ScheduleOfTheDay.View.Schedule.DayCells.Cell.CellView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cellbehavior="clr-namespace:ScheduleOfTheDay.ViewModel"
              xmlns:converter="clr-namespace:ScheduleOfTheDay.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="13" d:DesignWidth="13" MouseMove="UserControl_MouseMove">
+             d:DesignHeight="13" d:DesignWidth="13">
     <UserControl.Resources>
         <converter:SequenceNumberToBooleanConverter x:Key="IdToBoolean" ></converter:SequenceNumberToBooleanConverter>
         <Style TargetType="{x:Type Label}">
@@ -24,6 +26,10 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Label Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding SequenceNumber}" Width="13" Height="13"></Label>
+        <Label Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding SequenceNumber}" Width="13" Height="13">
+            <i:Interaction.Behaviors>
+                <cellbehavior:BehaviorOfDaysCells></cellbehavior:BehaviorOfDaysCells>
+            </i:Interaction.Behaviors>
+        </Label>
     </Grid>
 </UserControl>

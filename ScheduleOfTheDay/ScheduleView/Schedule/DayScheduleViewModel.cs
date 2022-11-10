@@ -13,14 +13,15 @@ namespace ScheduleOfTheDay.ViewModel
         public DayScheduleViewModel()
         {
             var list = LoadCollectionOfDays();
-            _dayRows = new ObservableCollection<DayCellsViewModel>(list);
-            _saveCommand = new RelayCommand(obj => { Save(); });
+            DaysCollection = new ObservableCollection<DayCellsViewModel>(list);
+            SaveCommand = new RelayCommand(obj => { Save(); });
             HeaderTime = GetTimeList();
         }
 
+        public RelayCommand SaveCommand { get; }
         private string[] GetTimeList()
         {
-            DateTime time = DateTime.Parse("02:00:00 AM");
+            var time = DateTime.Parse("02:00:00 AM");
             string[] list = new string[13];
             for (int i = 0; i < 13; i++)
             {
@@ -30,18 +31,8 @@ namespace ScheduleOfTheDay.ViewModel
             }
             return list;
         }
-        private ObservableCollection<DayCellsViewModel> _dayRows;
-        public ObservableCollection<DayCellsViewModel> DayRows
-        {
-            get { return _dayRows; }
-            set { _dayRows = value; }
-        }
 
-        private RelayCommand _saveCommand;
-        public RelayCommand SaveCommand
-        {
-            get { return _saveCommand; }
-        }
+        public ObservableCollection<DayCellsViewModel> DaysCollection { get; set; }
 
         private string[] _headerTime;
         public string[] HeaderTime
@@ -52,10 +43,10 @@ namespace ScheduleOfTheDay.ViewModel
 
         public void Save()
         {
-            StreamWriter sw = new StreamWriter(Path);
-            foreach (var collections in DayRows)
+            var sw = new StreamWriter(Path);
+            foreach (var collections in DaysCollection)
             {
-                var collection = DayRows.FirstOrDefault(x => x.NameOfDay == collections.NameOfDay);
+                var collection = DaysCollection.FirstOrDefault(x => x.NameOfDay == collections.NameOfDay);
                 if (collection != null)
                 {
                     foreach (var cellCollection in collection.CellSchedule)
@@ -70,13 +61,11 @@ namespace ScheduleOfTheDay.ViewModel
 
         private ObservableCollection<DayCellsViewModel> LoadCollectionOfDays()
         {
-            ObservableCollection<DayCellsViewModel> collectionOfDays = new ObservableCollection<DayCellsViewModel>();
-            int i = 0;
+            var collectionOfDays = new ObservableCollection<DayCellsViewModel>();
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
-                DayCellsViewModel collectionOfDay = new DayCellsViewModel(day);
+                var collectionOfDay = new DayCellsViewModel(day);
                 collectionOfDays.Add(collectionOfDay);
-                i++;
             }
             return collectionOfDays;
         }
