@@ -7,22 +7,14 @@ using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.ViewModel
 {
-
     public class DayCellsViewModel : PropertyChange
     {
-        int count = 0;
+        private readonly int count = 0;
         public DayCellsViewModel(DayOfWeek day)
         {
             NameOfDay = day;
             count = 96;
-            if (File.Exists(Global.Path))
-            {
-                CellSchedule = LoadCellsFromFile();
-            }
-            else
-            {
-                CellSchedule = GenerateNewCells();
-            }
+            CellSchedule = File.Exists(Global.Path) ? LoadCellsFromFile() : GenerateNewCells();
         }
         public DayOfWeek NameOfDay { get; }
         public ObservableCollection<CelViewModel> CellSchedule { get; }
@@ -32,20 +24,17 @@ namespace ScheduleOfTheDay.ViewModel
             var sr = new StreamReader(Global.Path);
             var time = new DateTime(0);
             var scheduleCells = new ObservableCollection<CelViewModel>();
-            int i = 0;
+            var i = 0;
             while (!sr.EndOfStream)
             {
-                var scheduleCell = new CelViewModel(i,NameOfDay);
-                scheduleCell.Time = time;
+                var status = sr.ReadLine();
+                var statusWords = status.Split(' ');
+                if (statusWords[0] != NameOfDay.ToString()) continue;
+                var isSelect = statusWords[1] == "True";
+                var scheduleCell = new CelViewModel(i, NameOfDay, isSelect, time);
                 time = time.AddMinutes(15);
-                string status = sr.ReadLine();
-                string[] statusWords = status.Split(' ');
-                if (statusWords[0] == NameOfDay.ToString())
-                {
-                    scheduleCell.IsSelect = statusWords[1] == "True";
-                    scheduleCells.Add(scheduleCell);
-                    i++;
-                }
+                scheduleCells.Add(scheduleCell);
+                i++;
             }
             return scheduleCells;
         }
@@ -54,10 +43,9 @@ namespace ScheduleOfTheDay.ViewModel
         {
             var time = new DateTime(0);
             var scheduleCells = new ObservableCollection<CelViewModel>();
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
-                var scheduleCell = new CelViewModel(i, NameOfDay);
-                scheduleCell.Time = time;
+                var scheduleCell = new CelViewModel(i, NameOfDay, false, time);
                 time = time.AddMinutes(15);
                 scheduleCells.Add(scheduleCell);
             }

@@ -1,34 +1,53 @@
 ﻿<UserControl x:Class="ScheduleOfTheDay.View.Schedule.DayCells.Cell.CellView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cellbehavior="clr-namespace:ScheduleOfTheDay.ViewModel"
              xmlns:converter="clr-namespace:ScheduleOfTheDay.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="13" d:DesignWidth="13">
     <UserControl.Resources>
-        <converter:SequenceNumberToBooleanConverter x:Key="IdToBoolean" ></converter:SequenceNumberToBooleanConverter>
+        <converter:SequenceNumberToBooleanConverter x:Key="IdToBoolean" />
         <Style TargetType="{x:Type Label}">
-            <Setter Property="Background" Value="Gray"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Value="2,0,0,0" Property="Margin"></Setter>
+            <Setter 
+                Property="Background" 
+                Value="Gray"/>
+            <Setter 
+                Property="BorderThickness" 
+                Value="0"/>
+            <Setter 
+                Property="Margin" 
+                Value="0"/>
+            <Setter 
+                Value="2,0,0,0" 
+                Property="Margin" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsSelect}" Value="True">
-                    <Setter Value="Blue" Property="Background"></Setter>
+                <DataTrigger 
+                    Binding="{Binding IsSelect}" 
+                    Value="True">
+                    <Setter Value="Blue" Property="Background" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding SequenceNumber, Converter={StaticResource IdToBoolean}}" Value="True">
-                    <Setter Value="10,0,0,0" Property="Margin"></Setter>
+                <DataTrigger 
+                    Binding="{Binding SequenceNumber, Converter={StaticResource IdToBoolean}}" 
+                    Value="True">
+                    <Setter 
+                        Value="10,0,0,0" 
+                        Property="Margin" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Label Tag="{Binding NameOfWeek}" Foreground="Transparent" Content="{Binding SequenceNumber}" Width="13" Height="13">
+        <Label 
+            Tag="{Binding NameOfWeek}" 
+            Foreground="Transparent" 
+            Content="{Binding SequenceNumber}" 
+            Width="13" 
+            Height="13">
             <i:Interaction.Behaviors>
-                <cellbehavior:BehaviorOfDaysCells></cellbehavior:BehaviorOfDaysCells>
+                <cellbehavior:BehaviorOfDaysCells />
             </i:Interaction.Behaviors>
         </Label>
     </Grid>

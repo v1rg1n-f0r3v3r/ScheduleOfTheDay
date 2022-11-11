@@ -10,29 +10,48 @@
              d:DataContext="{d:DesignInstance dc:DayScheduleViewModel}"
              d:DesignHeight="400" d:DesignWidth="1700">
     <Grid Background="White">
-        <ItemsControl ItemsSource="{Binding HeaderTime}" Margin="109,100,0,20">
+        <ItemsControl 
+            ItemsSource="{Binding HeaderTime}" 
+            Margin="109,100,0,20">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Margin="0" IsItemsHost="True" Orientation="Horizontal"></VirtualizingStackPanel>
+                    <VirtualizingStackPanel 
+                        Margin="0" 
+                        IsItemsHost="True" 
+                        Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding}" Margin="100,0,0,0"></TextBlock>
+                        <TextBlock 
+                            Text="{Binding}" 
+                            Margin="100,0,0,0" />
                     </StackPanel>
-                </DataTemplate> 
+                </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <ItemsControl  Margin="10,20,10,0" VerticalAlignment="Center" Height="auto" BorderThickness="0" Background="Transparent" ItemsSource="{Binding Days}">
+        <ItemsControl  
+            Margin="10,20,10,0" 
+            VerticalAlignment="Center" 
+            Height="auto" BorderThickness="0" 
+            Background="Transparent" 
+            ItemsSource="{Binding Days}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <uc:DayView></uc:DayView>
-                </DataTemplate>                
+                    <uc:DayView />
+                </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
-        <Button Command="{Binding SaveCommand}" Height="50" Width="150" Content="Save" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+
+        <Button 
+            Command="{Binding SaveCommand}" 
+            Height="50" 
+            Width="150" 
+            Content="Save" 
+            FontSize="20" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Bottom" />
     </Grid>
 </UserControl>

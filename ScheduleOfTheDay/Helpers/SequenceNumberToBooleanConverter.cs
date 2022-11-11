@@ -8,14 +8,7 @@ namespace ScheduleOfTheDay.ViewModel
     {
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((Convert.ToDouble(value) % 8) == 0 && Convert.ToDouble(value) != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (Convert.ToDouble(value) % 8) == 0 && Convert.ToDouble(value) != 0;
         }
 
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

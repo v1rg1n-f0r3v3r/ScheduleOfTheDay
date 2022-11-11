@@ -23,9 +23,9 @@ namespace ScheduleOfTheDay.ViewModel
         {
             var time = new DateTime(1,1,1,2,0,0);
             var listOfTimeHeader = new string[13];
-            for (int i = 0; i < 13; i++)
+            for (var i = 0; i < 13; i++)
             {
-                string listItem = time.ToString("HH:mm");
+                var listItem = time.ToString("HH:mm");
                 time = time.AddHours(2);
                 listOfTimeHeader[i] = listItem;
             }
@@ -42,12 +42,10 @@ namespace ScheduleOfTheDay.ViewModel
             foreach (var day in Days)
             {
                 var collection = Days.FirstOrDefault(x => x.NameOfDay == day.NameOfDay);
-                if (collection != null)
+                if (collection == null) continue;
+                foreach (var cellCollection in collection.CellSchedule)
                 {
-                    foreach (var cellCollection in collection.CellSchedule)
-                    {
-                        sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
-                    }
+                    sw.WriteLine(cellCollection.NameOfWeek.ToString() + " " + cellCollection.IsSelect);
                 }
             }
             sw.Close();
@@ -57,7 +55,7 @@ namespace ScheduleOfTheDay.ViewModel
         private ObservableCollection<DayCellsViewModel> LoadCollectionOfDays()
         {
             var collectionOfDays = new ObservableCollection<DayCellsViewModel>();
-            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
+            foreach (var day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
                 var collectionOfDay = new DayCellsViewModel(day);
                 collectionOfDays.Add(collectionOfDay);
