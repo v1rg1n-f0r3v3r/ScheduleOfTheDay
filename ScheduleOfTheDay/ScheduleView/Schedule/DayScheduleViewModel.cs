@@ -21,7 +21,7 @@ namespace ScheduleOfTheDay.ViewModel
         public RelayCommand SaveCommand { get; }
         private string[] GetTimeList()
         {
-            var time = DateTime.Parse("02:00:00 AM");
+            var time = new DateTime(1,1,1,2,0,0);
             var listOfTimeHeader = new string[13];
             for (int i = 0; i < 13; i++)
             {

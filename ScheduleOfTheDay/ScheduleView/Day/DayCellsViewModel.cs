@@ -30,14 +30,14 @@ namespace ScheduleOfTheDay.ViewModel
         private ObservableCollection<CelViewModel> LoadCellsFromFile()
         {
             var sr = new StreamReader(Global.Path);
-            var time = DateTime.Parse("00:00:00 PM");
+            var time = new DateTime(0);
             var scheduleCells = new ObservableCollection<CelViewModel>();
             int i = 0;
             while (!sr.EndOfStream)
             {
                 var scheduleCell = new CelViewModel(i,NameOfDay);
                 scheduleCell.Time = time;
-                time = time.AddMinutes(-15);
+                time = time.AddMinutes(15);
                 string status = sr.ReadLine();
                 string[] statusWords = status.Split(' ');
                 if (statusWords[0] == NameOfDay.ToString())
@@ -52,13 +52,13 @@ namespace ScheduleOfTheDay.ViewModel
 
         private ObservableCollection<CelViewModel> GenerateNewCells()
         {
-            var time = DateTime.Parse("00:00:00 PM");
+            var time = new DateTime(0);
             var scheduleCells = new ObservableCollection<CelViewModel>();
             for (int i = 0; i < count; i++)
             {
                 var scheduleCell = new CelViewModel(i, NameOfDay);
                 scheduleCell.Time = time;
-                time = time.AddMinutes(-15);
+                time = time.AddMinutes(15);
                 scheduleCells.Add(scheduleCell);
             }
             return scheduleCells;

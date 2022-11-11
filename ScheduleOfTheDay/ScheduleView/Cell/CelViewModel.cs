@@ -1,5 +1,6 @@
 ﻿using ScheduleOfTheDay.ViewModel;
 using System;
+using System.Windows;
 using DayOfWeek = ScheduleOfTheDay.Model.DayOfWeek;
 
 namespace ScheduleOfTheDay.ScheduleView.Cell
